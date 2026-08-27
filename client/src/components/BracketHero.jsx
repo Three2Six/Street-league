@@ -24,12 +24,12 @@ function bracketLines(numSeeds, roundWidth, slotHeight) {
   return { lines, finalX: x, finalY: positions[0] };
 }
 
-const NUM_SEEDS = 8;
-const ROUND_WIDTH = 80;
-const SLOT_HEIGHT = 40;
+const NUM_SEEDS = 16;
+const ROUND_WIDTH = 70;
+const SLOT_HEIGHT = 36;
 const HEIGHT = NUM_SEEDS * SLOT_HEIGHT;
 const { lines: leftLines, finalX, finalY } = bracketLines(NUM_SEEDS, ROUND_WIDTH, SLOT_HEIGHT);
-const CENTER_GAP = 160;
+const CENTER_GAP = 220;
 const WIDTH = finalX * 2 + CENTER_GAP;
 const centerX = WIDTH / 2;
 const mirror = ([x1, y1, x2, y2]) => [WIDTH - x1, y1, WIDTH - x2, y2];
@@ -40,6 +40,8 @@ const allLines = [
   [WIDTH - finalX, finalY, centerX, HEIGHT / 2],
 ];
 
+// Fixed full-page backdrop (same pattern as PageBackground) — sits behind the leaderboard's
+// content rather than in a boxed-off banner, so it reads as the page's background, not a widget.
 export default function BracketHero() {
   return (
     <div className="bracket-hero">

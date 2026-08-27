@@ -616,16 +616,21 @@ button.secondary {
 
 /* Leaderboard */
 .bracket-hero {
-  position: relative;
-  height: 160px;
-  border-radius: 12px;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   overflow: hidden;
-  background: #12141a;
-  border: 1px solid #262b36;
-  margin-bottom: 20px;
+  background: #0d0c10;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.bracket-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(13, 12, 16, 0.35) 0%, rgba(13, 12, 16, 0.85) 65%, rgba(13, 12, 16, 0.97) 100%);
 }
 
 .bracket-svg {
@@ -648,19 +653,22 @@ button.secondary {
 
 .bracket-hero-text {
   position: relative;
+  z-index: 1;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 14px;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 28px);
   font-weight: 800;
-  font-size: 2rem;
-  letter-spacing: 0.06em;
-  color: #e8eaed;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+  font-size: clamp(3rem, 9vw, 8rem);
+  letter-spacing: 0.05em;
+  color: rgba(232, 234, 237, 0.07);
+  white-space: nowrap;
 }
 
 .bracket-vs {
-  color: #ff5a36;
-  font-size: 1.3rem;
+  color: rgba(255, 90, 54, 0.16);
+  font-size: clamp(1.8rem, 5vw, 4.5rem);
 }
 
 .scope-tabs {
