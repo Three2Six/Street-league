@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import PageBackground from '../components/PageBackground.jsx';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -27,6 +28,7 @@ export default function LoginPage() {
 
   return (
     <div className="auth-page">
+      <PageBackground image="/backgrounds/auth-nav.png" />
       <form className="auth-form" onSubmit={onSubmit}>
         <h1>Welcome back</h1>
         {error && <div className="error-banner">{error}</div>}
