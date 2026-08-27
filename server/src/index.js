@@ -2,6 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import http from 'node:http';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { initSchema } from './db.js';
 import { initWs } from './ws.js';
 import authRoutes from './routes/auth.js';
@@ -26,6 +28,18 @@ app.use('/api/messages', messagesRoutes);
 app.use('/api/sos', sosRoutes);
 app.use('/api/cruises', cruisesRoutes);
 app.use('/api/trophies', trophiesRoutes);
+
+// Serve the built client (client/dist) so a single service can host both the API and the app —
+// the client already calls /api and /ws with relative, same-origin paths, so no separate static
+// host or CORS setup is needed in production. No-ops harmlessly in dev, where dist/ doesn't exist
+// and the client is served by Vite on its own port instead.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const clientDist = path.join(__dirname, '../../client/dist');
+app.use(express.static(clientDist));
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(path.join(clientDist, 'index.html'), (err) => err && next(err));
+});
 
 app.use((err, req, res, next) => {
   console.error(err);
