@@ -620,7 +620,7 @@ button.secondary {
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  background: #1f222c;
+  background: #1f222c url(/backgrounds/leaderboard-road.png) center / cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -630,7 +630,7 @@ button.secondary {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(31, 34, 44, 0.35) 0%, rgba(31, 34, 44, 0.8) 65%, rgba(31, 34, 44, 0.93) 100%);
+  background: radial-gradient(ellipse at center, rgba(31, 34, 44, 0.45) 0%, rgba(31, 34, 44, 0.6) 65%, rgba(31, 34, 44, 0.8) 100%);
 }
 
 .bracket-svg {
