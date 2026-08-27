@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
 import { DEVICES, isBluetoothSupported } from '../telemetry/devices.js';
 import { distanceMiles, mpsToMph } from '../geo.js';
+import PageBackground from '../components/PageBackground.jsx';
 
 const DEFAULT_CENTER = [30.2672, -97.7431]; // Austin, TX — used until we know where the user is
 const REPORT_TYPES = [
@@ -188,6 +189,7 @@ export default function MapPage() {
 
   return (
     <div className="map-page">
+      <PageBackground image="/backgrounds/map-nav.png" dim="light" />
       <div className="banner-stack">
         {(geoError || actionError) && <div className="banner">{actionError || geoError}</div>}
         {!connected && <div className="banner warning">Reconnecting to live updates…</div>}
