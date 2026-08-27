@@ -71,6 +71,7 @@ export async function initSchema() {
       race_started_at TIMESTAMPTZ,
       finished_at TIMESTAMPTZ,
       top_speed_mps DOUBLE PRECISION,
+      time_source TEXT NOT NULL DEFAULT 'gps' CHECK (time_source IN ('gps', 'manual')),
       points_awarded INTEGER NOT NULL DEFAULT 0,
       PRIMARY KEY (challenge_id, user_id)
     );
@@ -111,12 +112,16 @@ export async function initSchema() {
     ALTER TABLE challenges ALTER COLUMN end_lng DROP NOT NULL;
     ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS race_started_at TIMESTAMPTZ;
     ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS top_speed_mps DOUBLE PRECISION;
+    ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS time_source TEXT NOT NULL DEFAULT 'gps';
     ALTER TABLE users ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
   `);
   await pool.query(`
     DO $$ BEGIN
       IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'challenges_mode_check') THEN
         ALTER TABLE challenges ADD CONSTRAINT challenges_mode_check CHECK (mode IN ('route', 'roll'));
+      END IF;
+      IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'challenge_participants_time_source_check') THEN
+        ALTER TABLE challenge_participants ADD CONSTRAINT challenge_participants_time_source_check CHECK (time_source IN ('gps', 'manual'));
       END IF;
     END $$;
   `);

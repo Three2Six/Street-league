@@ -136,6 +136,7 @@ function ParticipantLine({ p, challenge, now }) {
       <>
         {p.nickname} — {elapsedLabel(p.race_started_at, Date.parse(p.finished_at))}
         {topMph != null ? ` (top ${topMph} mph)` : ''}
+        {p.time_source === 'manual' && <span className="manual-badge" title="Typed in by the driver, not auto-detected">📟 self-reported</span>}
         {p.points_awarded ? ` — +${p.points_awarded} pts` : ' — DNF'}
       </>
     );
@@ -151,10 +152,60 @@ function ParticipantLine({ p, challenge, now }) {
   return <>{p.nickname} — waiting to launch…</>;
 }
 
+function LogTimeModal({ onClose, onSubmit }) {
+  const [elapsed, setElapsed] = useState('');
+  const [topSpeed, setTopSpeed] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  const submit = async (justMark) => {
+    setSubmitting(true);
+    setError('');
+    try {
+      await onSubmit(
+        justMark
+          ? {}
+          : {
+              elapsedSeconds: elapsed.trim() ? Number(elapsed) : undefined,
+              topSpeedMph: topSpeed.trim() ? Number(topSpeed) : undefined,
+            }
+      );
+      onClose();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <h3>Log your run</h3>
+        <p className="muted">Missed the auto-detect, or got a more accurate time off a Draggy/RaceBox? Type it in — self-reported, not device-verified.</p>
+        {error && <div className="error-banner">{error}</div>}
+        <label>
+          Elapsed time (seconds)
+          <input type="number" step="0.01" min="0" placeholder="e.g. 4.20" value={elapsed} onChange={(e) => setElapsed(e.target.value)} />
+        </label>
+        <label>
+          Top speed (mph)
+          <input type="number" step="0.1" min="0" placeholder="optional" value={topSpeed} onChange={(e) => setTopSpeed(e.target.value)} />
+        </label>
+        <div className="modal-actions">
+          <button disabled={submitting || !elapsed.trim()} onClick={() => submit(false)}>Save time</button>
+          <button className="secondary" disabled={submitting} onClick={() => submit(true)}>Just mark me finished</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ChallengeCard({ challenge, currentUserId, currentUserVisible, onChanged, now }) {
   const isCreator = challenge.creator_id === currentUserId;
   const me = challenge.participants.find((p) => p.user_id === currentUserId);
   const [busy, setBusy] = useState(false);
+  const [logTimeOpen, setLogTimeOpen] = useState(false);
 
   const act = async (path) => {
     setBusy(true);
@@ -166,6 +217,13 @@ function ChallengeCard({ challenge, currentUserId, currentUserVisible, onChanged
     } finally {
       setBusy(false);
     }
+  };
+
+  // Unlike act(), this lets the caller (the log-time modal) handle its own error display
+  // and decide whether to stay open, instead of the alert-and-move-on pattern above.
+  const submitLogTime = async (body) => {
+    await api(`/challenges/${challenge.id}/finish`, { method: 'POST', body });
+    onChanged();
   };
 
   return (
@@ -207,15 +265,19 @@ function ChallengeCard({ challenge, currentUserId, currentUserVisible, onChanged
           <button
             disabled={busy}
             className={challenge.mode === 'roll' ? 'secondary' : ''}
-            onClick={() => act('finish')}
+            onClick={() => (challenge.mode === 'roll' ? setLogTimeOpen(true) : act('finish'))}
           >
-            {challenge.mode === 'roll' ? 'Missed it? Finish manually' : 'I finished! 🏁'}
+            {challenge.mode === 'roll' ? 'Missed it? Log your time' : 'I finished! 🏁'}
           </button>
         )}
         {challenge.status === 'active' && isCreator && (
           <button disabled={busy} className="secondary" onClick={() => act('end')}>End & score</button>
         )}
       </div>
+
+      {logTimeOpen && (
+        <LogTimeModal onClose={() => setLogTimeOpen(false)} onSubmit={submitLogTime} />
+      )}
     </div>
   );
 }
