@@ -5,6 +5,7 @@ import { api } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWs } from '../context/WsContext.jsx';
 import { useNow } from '../hooks/useNow.js';
+import PageBackground from '../components/PageBackground.jsx';
 
 const DEFAULT_CENTER = [30.2672, -97.7431];
 const pointIcon = (emoji, className = 'marker-emoji') => L.divIcon({ html: emoji, className, iconSize: [28, 28], iconAnchor: [14, 14] });
@@ -199,6 +200,7 @@ export default function CruisesPage() {
 
   return (
     <div className="page challenges-page">
+      <PageBackground image="/backgrounds/cruises-lineup.png" />
       <div className="challenges-list">
         <h2>Upcoming cruises</h2>
         {sorted.length === 0 && <p className="muted">No cruises planned yet — set one up!</p>}
