@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { api } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWs } from '../context/WsContext.jsx';
+import PageBackground from '../components/PageBackground.jsx';
 
 export default function ChatPage() {
   const { user } = useAuth();
@@ -40,6 +41,7 @@ export default function ChatPage() {
 
   return (
     <div className="page chat-page">
+      <PageBackground image="/backgrounds/chat-gauges.png" />
       <div className="scope-tabs">
         {channels.map((c) => (
           <button key={c.key} className={channel === c.key ? 'active' : ''} onClick={() => setChannel(c.key)}>
