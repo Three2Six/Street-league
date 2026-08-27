@@ -148,6 +148,10 @@ body {
   background: linear-gradient(180deg, rgba(13, 12, 16, 0.5) 0%, rgba(13, 12, 16, 0.85) 55%, rgba(13, 12, 16, 0.97) 100%);
 }
 
+.page-background.dim-light::after {
+  background: linear-gradient(180deg, rgba(13, 12, 16, 0.25) 0%, rgba(13, 12, 16, 0.55) 55%, rgba(13, 12, 16, 0.8) 100%);
+}
+
 /* Auth pages */
 .auth-page {
   flex: 1;

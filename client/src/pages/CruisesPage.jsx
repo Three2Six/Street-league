@@ -200,7 +200,7 @@ export default function CruisesPage() {
 
   return (
     <div className="page challenges-page">
-      <PageBackground image="/backgrounds/cruises-lineup.png" />
+      <PageBackground image="/backgrounds/cruises-lineup.png" dim="light" />
       <div className="challenges-list">
         <h2>Upcoming cruises</h2>
         {sorted.length === 0 && <p className="muted">No cruises planned yet — set one up!</p>}
