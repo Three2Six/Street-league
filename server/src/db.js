@@ -83,9 +83,22 @@ export async function initSchema() {
       created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     );
 
+    CREATE TABLE IF NOT EXISTS sos_alerts (
+      id SERIAL PRIMARY KEY,
+      user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+      lat DOUBLE PRECISION NOT NULL,
+      lng DOUBLE PRECISION NOT NULL,
+      message TEXT,
+      status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'resolved')),
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      resolved_at TIMESTAMPTZ,
+      expires_at TIMESTAMPTZ NOT NULL
+    );
+
     CREATE INDEX IF NOT EXISTS idx_reports_expires_at ON reports (expires_at);
     CREATE INDEX IF NOT EXISTS idx_messages_channel_created ON messages (channel, created_at);
     CREATE INDEX IF NOT EXISTS idx_users_points ON users (points DESC);
+    CREATE INDEX IF NOT EXISTS idx_sos_status ON sos_alerts (status, expires_at);
   `);
 
   // Additive migrations for tables that may already exist from before roll races were added.

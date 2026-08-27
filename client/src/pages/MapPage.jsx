@@ -6,6 +6,7 @@ import { useWs } from '../context/WsContext.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
 import { DEVICES, isBluetoothSupported } from '../telemetry/devices.js';
+import { distanceMiles } from '../geo.js';
 
 const DEFAULT_CENTER = [30.2672, -97.7431]; // Austin, TX — used until we know where the user is
 const REPORT_TYPES = [
@@ -41,6 +42,14 @@ function ClickToSetLocation({ enabled, onPick }) {
   return null;
 }
 
+function FlyTo({ target }) {
+  const map = useMap();
+  useEffect(() => {
+    if (target) map.flyTo(target, 15);
+  }, [target, map]);
+  return null;
+}
+
 export default function MapPage() {
   const { user } = useAuth();
   const { connected, subscribe } = useWs();
@@ -49,10 +58,18 @@ export default function MapPage() {
   const [reports, setReports] = useState({}); // id -> report
   const [pendingReportType, setPendingReportType] = useState(null);
   const [actionError, setActionError] = useState('');
+  const [sosAlerts, setSosAlerts] = useState({}); // id -> alert
+  const [sosModalOpen, setSosModalOpen] = useState(false);
+  const [sosMessage, setSosMessage] = useState('');
+  const [sosSending, setSosSending] = useState(false);
+  const [flyTarget, setFlyTarget] = useState(null);
 
   useEffect(() => {
     api('/reports')
       .then(({ reports }) => setReports(Object.fromEntries(reports.map((r) => [r.id, r]))))
+      .catch(() => {});
+    api('/sos')
+      .then(({ alerts }) => setSosAlerts(Object.fromEntries(alerts.map((a) => [a.id, a]))))
       .catch(() => {});
   }, []);
 
@@ -81,6 +98,14 @@ export default function MapPage() {
           return next;
         })
       ),
+      subscribe('sos:new', (a) => setSosAlerts((prev) => ({ ...prev, [a.id]: a }))),
+      subscribe('sos:resolved', ({ id }) =>
+        setSosAlerts((prev) => {
+          const next = { ...prev };
+          delete next[id];
+          return next;
+        })
+      ),
     ];
     return () => unsubs.forEach((fn) => fn());
   }, [subscribe, user.id]);
@@ -88,6 +113,9 @@ export default function MapPage() {
   const othersList = useMemo(() => Object.values(others), [others]);
   const reportsList = useMemo(() => Object.values(reports), [reports]);
   const speedMph = speedMps != null ? Math.round(speedMps * 2.23694) : null;
+  const sosList = useMemo(() => Object.values(sosAlerts), [sosAlerts]);
+  const mySos = useMemo(() => sosList.find((a) => a.user_id === user.id), [sosList, user.id]);
+  const othersSos = useMemo(() => sosList.filter((a) => a.user_id !== user.id), [sosList, user.id]);
 
   const startReport = (type) => {
     if (!myPosition) {
@@ -117,11 +145,68 @@ export default function MapPage() {
     }
   };
 
+  const openSosModal = () => {
+    if (!myPosition) {
+      setActionError('We need your position first — click the map or enable location before sending an SOS.');
+      return;
+    }
+    setSosMessage('');
+    setSosModalOpen(true);
+  };
+
+  const sendSos = async () => {
+    if (!myPosition) return;
+    setSosSending(true);
+    try {
+      const { alert } = await api('/sos', {
+        method: 'POST',
+        body: { lat: myPosition[0], lng: myPosition[1], message: sosMessage.trim() || undefined },
+      });
+      setSosAlerts((prev) => ({ ...prev, [alert.id]: alert }));
+      setSosModalOpen(false);
+    } catch (err) {
+      setActionError(err.message);
+    } finally {
+      setSosSending(false);
+    }
+  };
+
+  const resolveSos = async () => {
+    if (!mySos) return;
+    try {
+      await api(`/sos/${mySos.id}/resolve`, { method: 'POST' });
+      setSosAlerts((prev) => {
+        const next = { ...prev };
+        delete next[mySos.id];
+        return next;
+      });
+    } catch (err) {
+      setActionError(err.message);
+    }
+  };
+
   return (
     <div className="map-page">
-      {(geoError || actionError) && <div className="banner">{actionError || geoError}</div>}
-      {!connected && <div className="banner warning">Reconnecting to live updates…</div>}
-      {!user.visible && <div className="banner warning">You're off the grid — nobody else can see you on the map.</div>}
+      <div className="banner-stack">
+        {(geoError || actionError) && <div className="banner">{actionError || geoError}</div>}
+        {!connected && <div className="banner warning">Reconnecting to live updates…</div>}
+        {!user.visible && <div className="banner warning">You're off the grid — nobody else can see you on the map.</div>}
+
+        {othersSos.map((a) => {
+          const miles = myPosition ? distanceMiles(myPosition[0], myPosition[1], a.lat, a.lng).toFixed(1) : null;
+          return (
+            <div key={a.id} className="banner sos-banner" onClick={() => setFlyTarget([a.lat, a.lng])}>
+              🆘 {a.nickname} needs help{miles ? ` — ${miles} mi away` : ''}{a.message ? `: "${a.message}"` : ''} (tap to view)
+            </div>
+          );
+        })}
+        {mySos && (
+          <div className="banner sos-banner sos-banner-mine">
+            🆘 Your SOS is active — drivers nearby were notified.
+            <button className="sos-resolve-button" onClick={resolveSos}>I'm OK — resolve</button>
+          </div>
+        )}
+      </div>
 
       <MapContainer center={myPosition || DEFAULT_CENTER} zoom={myPosition ? 14 : 11} className="map-container">
         <TileLayer
@@ -130,6 +215,7 @@ export default function MapPage() {
         />
         <RecenterOnce position={myPosition} />
         <ClickToSetLocation enabled={manualMode} onPick={manualSetPosition} />
+        <FlyTo target={flyTarget} />
 
         {myPosition && (
           <Marker position={myPosition} icon={divIcon('🚗', 'marker-emoji marker-self')}>
@@ -156,7 +242,24 @@ export default function MapPage() {
             </Popup>
           </Marker>
         ))}
+
+        {sosList.map((a) => (
+          <Marker key={a.id} position={[a.lat, a.lng]} icon={divIcon('🆘', 'marker-emoji marker-sos')}>
+            <Popup>
+              <div className="report-popup">
+                <strong>{a.user_id === user.id ? 'Your SOS' : `${a.nickname} needs help`}</strong>
+                {a.message && <p>{a.message}</p>}
+                <div className="muted">sent {new Date(a.created_at).toLocaleTimeString()}</div>
+                {a.user_id === user.id && <button onClick={resolveSos}>I'm OK — resolve</button>}
+              </div>
+            </Popup>
+          </Marker>
+        ))}
       </MapContainer>
+
+      <button className="sos-fab" onClick={openSosModal} title="Alert drivers within 10 miles that you need help">
+        🆘 SOS
+      </button>
 
       <div className="map-toolbar">
         <div className="toolbar-left">
@@ -194,6 +297,29 @@ export default function MapPage() {
             <div className="modal-actions">
               <button onClick={confirmReportHere}>Drop it</button>
               <button className="secondary" onClick={() => setPendingReportType(null)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {sosModalOpen && (
+        <div className="modal-backdrop" onClick={() => setSosModalOpen(false)}>
+          <div className="modal modal-sos" onClick={(e) => e.stopPropagation()}>
+            <h3>🆘 Send an SOS?</h3>
+            <p className="muted">
+              This notifies every Street League driver within 10 miles of your current position, right now, that you need help.
+            </p>
+            <input
+              placeholder="What's going on? (optional)"
+              value={sosMessage}
+              onChange={(e) => setSosMessage(e.target.value)}
+              maxLength={200}
+            />
+            <div className="modal-actions">
+              <button className="sos-confirm-button" disabled={sosSending} onClick={sendSos}>
+                {sosSending ? 'Sending…' : 'Send SOS'}
+              </button>
+              <button className="secondary" onClick={() => setSosModalOpen(false)}>Cancel</button>
             </div>
           </div>
         </div>

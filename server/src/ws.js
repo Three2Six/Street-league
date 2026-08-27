@@ -106,3 +106,13 @@ export function broadcast(type, payload) {
     for (const ws of set) send(ws, type, payload);
   }
 }
+
+// Deliver only to specific users — e.g. an SOS alert should reach drivers within its radius,
+// not everyone logged in everywhere.
+export function broadcastTo(userIds, type, payload) {
+  for (const userId of userIds) {
+    const set = clients.get(userId);
+    if (!set) continue;
+    for (const ws of set) send(ws, type, payload);
+  }
+}

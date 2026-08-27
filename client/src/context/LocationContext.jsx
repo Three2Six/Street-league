@@ -16,7 +16,7 @@ function haversineMeters(lat1, lng1, lat2, lng2) {
 
 export function LocationProvider({ children }) {
   const { user } = useAuth();
-  const { send } = useWs();
+  const { send, connected } = useWs();
   const [position, setPosition] = useState(null);
   const [heading, setHeading] = useState(null);
   const [speedMps, setSpeedMps] = useState(null);
@@ -25,6 +25,7 @@ export function LocationProvider({ children }) {
 
   const lastSentRef = useRef(0);
   const prevSampleRef = useRef(null); // { lat, lng, t } — for the speed fallback when coords.speed is unavailable
+  const lastSampleRef = useRef(null); // { lat, lng, heading, speed } — resent once the socket (re)connects
   const speedListenersRef = useRef(new Set());
 
   // Raw, un-throttled speed stream for anything that needs to react fast (roll-race detection).
@@ -55,11 +56,24 @@ export function LocationProvider({ children }) {
     if (speed != null) setSpeedMps(speed);
     emitSpeed(speed, t);
 
+    lastSampleRef.current = { lat, lng, heading: headingVal ?? null, speed };
     if (user?.visible && t - lastSentRef.current >= WS_SEND_THROTTLE_MS) {
       lastSentRef.current = t;
       send({ type: 'location', lat, lng, heading: headingVal ?? null, speed });
     }
   };
+
+  // The very first GPS fix (or any fix while the socket happens to be mid-reconnect) can race
+  // the WebSocket handshake and get silently dropped, since `send` no-ops until the socket is
+  // open — with no guarantee another GPS callback follows soon enough to cover for it. Resend
+  // whatever we last knew the instant the connection is actually up, bypassing the throttle.
+  useEffect(() => {
+    if (connected && user?.visible && lastSampleRef.current) {
+      lastSentRef.current = Date.now();
+      send({ type: 'location', ...lastSampleRef.current });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected]);
 
   useEffect(() => {
     if (!user) return;
