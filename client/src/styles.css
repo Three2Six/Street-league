@@ -282,6 +282,7 @@ button.secondary {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .toggle-button {
@@ -300,6 +301,22 @@ button.secondary {
   border-radius: 8px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+}
+
+.device-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.device-buttons button {
+  background: #2f3646;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.device-unsupported {
+  font-size: 0.8rem;
 }
 
 .report-buttons {

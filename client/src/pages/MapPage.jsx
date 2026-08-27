@@ -5,6 +5,7 @@ import { api } from '../api.js';
 import { useWs } from '../context/WsContext.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
+import { DEVICES, isBluetoothSupported } from '../telemetry/devices.js';
 
 const DEFAULT_CENTER = [30.2672, -97.7431]; // Austin, TX — used until we know where the user is
 const REPORT_TYPES = [
@@ -163,6 +164,19 @@ export default function MapPage() {
             {manualMode ? 'Manual position: on (click map)' : 'Use GPS'}
           </button>
           {speedMph != null && <span className="speed-badge">{speedMph} mph</span>}
+          <div className="device-buttons">
+            {isBluetoothSupported() ? (
+              DEVICES.map((d) => (
+                <button key={d.id} disabled title="Coming soon — needs the device's official Bluetooth protocol spec">
+                  🔌 Connect {d.label}
+                </button>
+              ))
+            ) : (
+              <span className="muted device-unsupported" title="Web Bluetooth isn't available in this browser (this is normal on iPhone/Safari)">
+                Draggy/RaceBox: not supported in this browser
+              </span>
+            )}
+          </div>
         </div>
         <div className="report-buttons">
           {REPORT_TYPES.map((r) => (
