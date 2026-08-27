@@ -6,6 +6,7 @@ import SignupPage from './pages/SignupPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import MapPage from './pages/MapPage.jsx';
 import ChallengesPage from './pages/ChallengesPage.jsx';
+import CruisesPage from './pages/CruisesPage.jsx';
 import LeaderboardPage from './pages/LeaderboardPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
 
@@ -39,6 +40,14 @@ export default function App() {
             element={
               <RequireAuth>
                 <ChallengesPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/cruises"
+            element={
+              <RequireAuth>
+                <CruisesPage />
               </RequireAuth>
             }
           />

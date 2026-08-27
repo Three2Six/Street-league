@@ -96,10 +96,31 @@ export async function initSchema() {
       expires_at TIMESTAMPTZ NOT NULL
     );
 
+    CREATE TABLE IF NOT EXISTS cruises (
+      id SERIAL PRIMARY KEY,
+      creator_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      name TEXT NOT NULL,
+      description TEXT,
+      meet_lat DOUBLE PRECISION NOT NULL,
+      meet_lng DOUBLE PRECISION NOT NULL,
+      route JSONB,
+      starts_at TIMESTAMPTZ NOT NULL,
+      status TEXT NOT NULL DEFAULT 'scheduled' CHECK (status IN ('scheduled', 'cancelled')),
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    );
+
+    CREATE TABLE IF NOT EXISTS cruise_rsvps (
+      cruise_id INTEGER REFERENCES cruises(id) ON DELETE CASCADE,
+      user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      PRIMARY KEY (cruise_id, user_id)
+    );
+
     CREATE INDEX IF NOT EXISTS idx_reports_expires_at ON reports (expires_at);
     CREATE INDEX IF NOT EXISTS idx_messages_channel_created ON messages (channel, created_at);
     CREATE INDEX IF NOT EXISTS idx_users_points ON users (points DESC);
     CREATE INDEX IF NOT EXISTS idx_sos_status ON sos_alerts (status, expires_at);
+    CREATE INDEX IF NOT EXISTS idx_cruises_starts_at ON cruises (starts_at);
   `);
 
   // Additive migrations for tables that may already exist from before roll races were added.

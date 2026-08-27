@@ -477,6 +477,10 @@ button.secondary {
   gap: 24px;
 }
 
+.challenges-list {
+  min-width: 0;
+}
+
 .challenge-card {
   background: #171a21;
   border: 1px solid #262b36;
@@ -537,10 +541,33 @@ button.secondary {
   gap: 10px;
 }
 
+.create-challenge label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #9aa1b0;
+}
+
 .mini-map {
   height: 260px;
   border-radius: 8px;
   overflow: hidden;
+}
+
+.cruise-locked {
+  height: 120px;
+  border-radius: 8px;
+  border: 1px dashed #2f3646;
+  background: #0f1115;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #9aa1b0;
+  font-size: 0.9rem;
+  padding: 0 16px;
+  margin: 8px 0;
 }
 
 .mode-toggle {

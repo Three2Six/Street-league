@@ -4,19 +4,11 @@ import L from 'leaflet';
 import { api } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWs } from '../context/WsContext.jsx';
+import { useNow } from '../hooks/useNow.js';
 
 const DEFAULT_CENTER = [30.2672, -97.7431];
 const pointIcon = (emoji) => L.divIcon({ html: emoji, className: 'marker-emoji', iconSize: [28, 28], iconAnchor: [14, 14] });
 const mpsToMph = (mps) => (mps == null ? null : Math.round(mps * 2.23694));
-
-function useNow(intervalMs) {
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), intervalMs);
-    return () => clearInterval(id);
-  }, [intervalMs]);
-  return now;
-}
 
 function PointPicker({ start, end, onPick }) {
   useMapEvents({
