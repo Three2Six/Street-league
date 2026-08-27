@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { api } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { mpsToMph } from '../geo.js';
+import BracketHero from '../components/BracketHero.jsx';
 
 const SCOPES = [
   { key: 'world', label: 'World' },
@@ -75,6 +76,7 @@ export default function LeaderboardPage() {
 
   return (
     <div className="page leaderboard-page">
+      <BracketHero />
       <h2>Scoreboard</h2>
       <div className="scope-tabs">
         {SCOPES.map((s) => (
