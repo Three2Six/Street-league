@@ -620,7 +620,7 @@ button.secondary {
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  background: #0d0c10;
+  background: #1f222c;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -630,7 +630,7 @@ button.secondary {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(13, 12, 16, 0.35) 0%, rgba(13, 12, 16, 0.85) 65%, rgba(13, 12, 16, 0.97) 100%);
+  background: radial-gradient(ellipse at center, rgba(31, 34, 44, 0.35) 0%, rgba(31, 34, 44, 0.8) 65%, rgba(31, 34, 44, 0.93) 100%);
 }
 
 .bracket-svg {
