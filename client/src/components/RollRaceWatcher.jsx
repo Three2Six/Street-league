@@ -9,7 +9,7 @@ import { pruneOldSamples, speedDeltaOverWindow, isLaunch, isLift } from '../roll
 // keeps timing itself via GPS even while you're looking at the map or chat, not the
 // challenges list. That's the point: nobody should have to tap anything mid-race.
 export default function RollRaceWatcher() {
-  const { user } = useAuth();
+  const { user, refreshMe } = useAuth();
   const { subscribe } = useWs();
   const { subscribeSpeed } = useLocation();
   const [rollChallenges, setRollChallenges] = useState([]);
@@ -21,7 +21,18 @@ export default function RollRaceWatcher() {
 
   useEffect(() => {
     load();
-    const unsubs = [subscribe('challenge:new', load), subscribe('challenge:update', load), subscribe('challenge:finished', load)];
+    // This component is already listening for every challenge finishing (roll or route — the
+    // event isn't mode-specific), which is also exactly when the navbar's points badge can go
+    // stale, so refreshing it here piggybacks on wiring that already exists rather than adding
+    // a second always-mounted listener just for that.
+    const unsubs = [
+      subscribe('challenge:new', load),
+      subscribe('challenge:update', load),
+      subscribe('challenge:finished', () => {
+        load();
+        refreshMe();
+      }),
+    ];
     return () => unsubs.forEach((fn) => fn());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subscribe]);

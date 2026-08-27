@@ -42,9 +42,19 @@ export function AuthProvider({ children }) {
     const { user } = await api('/auth/visibility', { method: 'PATCH', body: { visible } });
     setUser(user);
   }, []);
+  // Points change server-side whenever any challenge finishes (not just ones this tab caused,
+  // e.g. a challenge someone else just scored you into) — refetch instead of guessing the delta.
+  const refreshMe = useCallback(async () => {
+    try {
+      const { user } = await api('/auth/me');
+      setUser(user);
+    } catch {
+      // transient network hiccup — the next successful refresh will catch up
+    }
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, signup, login, logout, addPoints, setVisible }}>
+    <AuthContext.Provider value={{ user, token, loading, signup, login, logout, addPoints, setVisible, refreshMe }}>
       {children}
     </AuthContext.Provider>
   );
