@@ -42,7 +42,8 @@ export default function RollRaceWatcher() {
         if (pendingRef.current.has(challenge.id)) continue;
 
         if (!me.race_started_at) {
-          if (isLaunch(speedMps, delta)) {
+          // Off the grid: don't pick up new launches (an in-progress run still gets timed out below).
+          if (user.visible && isLaunch(speedMps, delta)) {
             pendingRef.current.add(challenge.id);
             topSpeedRef.current.set(challenge.id, speedMps ?? 0);
             api(`/challenges/${challenge.id}/launch`, { method: 'POST', body: { speed: speedMps } })

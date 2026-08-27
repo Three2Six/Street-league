@@ -17,6 +17,7 @@ export async function initSchema() {
       state TEXT,
       country TEXT,
       points INTEGER NOT NULL DEFAULT 0,
+      visible BOOLEAN NOT NULL DEFAULT true,
       created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     );
 
@@ -97,6 +98,7 @@ export async function initSchema() {
     ALTER TABLE challenges ALTER COLUMN end_lng DROP NOT NULL;
     ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS race_started_at TIMESTAMPTZ;
     ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS top_speed_mps DOUBLE PRECISION;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
   `);
   await pool.query(`
     DO $$ BEGIN

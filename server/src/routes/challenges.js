@@ -8,6 +8,11 @@ const POINTS_BY_RANK = [100, 60, 30];
 const POINTS_FOR_FINISHING = 10;
 const PARTICIPANT_FIELDS = `p.user_id, u.nickname, p.joined_at, p.race_started_at, p.finished_at, p.top_speed_mps, p.points_awarded`;
 
+async function isVisible(userId) {
+  const { rows } = await pool.query('SELECT visible FROM users WHERE id = $1', [userId]);
+  return Boolean(rows[0]?.visible);
+}
+
 router.get('/', requireAuth, async (req, res) => {
   const { rows } = await pool.query(
     `SELECT c.*, u.nickname AS creator_nickname,
@@ -60,6 +65,9 @@ router.post('/', requireAuth, async (req, res) => {
 
 router.post('/:id/join', requireAuth, async (req, res) => {
   const challengeId = Number(req.params.id);
+  if (!(await isVisible(req.userId))) {
+    return res.status(403).json({ error: "You're off the grid — turn visibility on to join a race" });
+  }
   const { rows } = await pool.query(`SELECT status FROM challenges WHERE id = $1`, [challengeId]);
   if (!rows[0]) return res.status(404).json({ error: 'Challenge not found' });
   if (rows[0].status !== 'open') return res.status(409).json({ error: 'Challenge already started or finished' });
@@ -113,6 +121,9 @@ router.post('/:id/finish', requireAuth, async (req, res) => {
 router.post('/:id/launch', requireAuth, async (req, res) => {
   const challengeId = Number(req.params.id);
   const speed = Number(req.body?.speed);
+  if (!(await isVisible(req.userId))) {
+    return res.status(403).json({ error: "You're off the grid — turn visibility on to race" });
+  }
   const { rows } = await pool.query(`SELECT status, mode FROM challenges WHERE id = $1`, [challengeId]);
   if (!rows[0]) return res.status(404).json({ error: 'Challenge not found' });
   if (rows[0].mode !== 'roll') return res.status(409).json({ error: 'Not a roll race' });

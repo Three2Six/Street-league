@@ -151,7 +151,7 @@ function ParticipantLine({ p, challenge, now }) {
   return <>{p.nickname} — waiting to launch…</>;
 }
 
-function ChallengeCard({ challenge, currentUserId, onChanged, now }) {
+function ChallengeCard({ challenge, currentUserId, currentUserVisible, onChanged, now }) {
   const isCreator = challenge.creator_id === currentUserId;
   const me = challenge.participants.find((p) => p.user_id === currentUserId);
   const [busy, setBusy] = useState(false);
@@ -186,7 +186,13 @@ function ChallengeCard({ challenge, currentUserId, onChanged, now }) {
 
       <div className="challenge-actions">
         {challenge.status === 'open' && !me && (
-          <button disabled={busy} onClick={() => act('join')}>Join</button>
+          <button
+            disabled={busy || !currentUserVisible}
+            onClick={() => act('join')}
+            title={currentUserVisible ? '' : "You're off the grid — turn visibility on to join"}
+          >
+            Join
+          </button>
         )}
         {challenge.status === 'open' && isCreator && (
           <button disabled={busy} onClick={() => act('start')}>Start race</button>
@@ -240,9 +246,12 @@ export default function ChallengesPage() {
     <div className="page challenges-page">
       <div className="challenges-list">
         <h2>Open & active challenges</h2>
+        {!user.visible && (
+          <div className="banner-inline">You're off the grid — flip "In the game" on in the nav bar to join or start races.</div>
+        )}
         {challenges.length === 0 && <p className="muted">No challenges yet — start one!</p>}
         {challenges.map((c) => (
-          <ChallengeCard key={c.id} challenge={c} currentUserId={user.id} onChanged={load} now={now} />
+          <ChallengeCard key={c.id} challenge={c} currentUserId={user.id} currentUserVisible={user.visible} onChanged={load} now={now} />
         ))}
       </div>
       <CreateChallengeForm onCreated={load} />

@@ -27,7 +27,8 @@ export function initWs(httpServer) {
     // Snapshot of everyone currently online so a new client can render the map immediately.
     const { rows } = await pool.query(
       `SELECT ll.user_id AS id, u.nickname, ll.lat, ll.lng, ll.heading, ll.speed_mps, ll.updated_at
-       FROM live_locations ll JOIN users u ON u.id = ll.user_id`
+       FROM live_locations ll JOIN users u ON u.id = ll.user_id
+       WHERE u.visible`
     );
     send(ws, 'presence:snapshot', rows);
 
@@ -45,6 +46,11 @@ export function initWs(httpServer) {
         const heading = msg.heading == null ? null : Number(msg.heading);
         const speedMps = msg.speed == null ? null : Number(msg.speed);
         if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+        // Off the grid: don't track or broadcast position while the user has visibility off.
+        const { rows: urows } = await pool.query('SELECT visible FROM users WHERE id = $1', [userId]);
+        if (!urows[0]?.visible) return;
+
         await pool.query(
           `INSERT INTO live_locations (user_id, lat, lng, heading, speed_mps, updated_at)
            VALUES ($1, $2, $3, $4, $5, now())

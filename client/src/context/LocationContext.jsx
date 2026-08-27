@@ -55,7 +55,7 @@ export function LocationProvider({ children }) {
     if (speed != null) setSpeedMps(speed);
     emitSpeed(speed, t);
 
-    if (t - lastSentRef.current >= WS_SEND_THROTTLE_MS) {
+    if (user?.visible && t - lastSentRef.current >= WS_SEND_THROTTLE_MS) {
       lastSentRef.current = t;
       send({ type: 'location', lat, lng, heading: headingVal ?? null, speed });
     }

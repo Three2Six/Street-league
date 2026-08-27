@@ -120,6 +120,7 @@ export default function MapPage() {
     <div className="map-page">
       {(geoError || actionError) && <div className="banner">{actionError || geoError}</div>}
       {!connected && <div className="banner warning">Reconnecting to live updates…</div>}
+      {!user.visible && <div className="banner warning">You're off the grid — nobody else can see you on the map.</div>}
 
       <MapContainer center={myPosition || DEFAULT_CENTER} zoom={myPosition ? 14 : 11} className="map-container">
         <TileLayer

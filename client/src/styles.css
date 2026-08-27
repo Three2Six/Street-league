@@ -85,6 +85,36 @@ body {
   background: #e05252;
 }
 
+.visibility-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #262b36;
+  border: 1px solid #2f3646;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #9aa1b0;
+}
+
+.visibility-toggle.on {
+  color: #35d07f;
+  border-color: #35d07f55;
+}
+
+.visibility-toggle.off {
+  color: #ffb84d;
+  border-color: #ffb84d55;
+}
+
+.visibility-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 .points-badge {
   background: #262b36;
   padding: 2px 8px;
@@ -207,6 +237,15 @@ button.secondary {
 .banner.warning {
   background: #4a3510;
   color: #ffcf6b;
+}
+
+.banner-inline {
+  background: #4a3510;
+  color: #ffcf6b;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
 }
 
 /* Map page */

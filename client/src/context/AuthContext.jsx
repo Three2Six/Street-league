@@ -38,9 +38,13 @@ export function AuthProvider({ children }) {
   const addPoints = useCallback((delta) => {
     setUser((u) => (u ? { ...u, points: u.points + delta } : u));
   }, []);
+  const setVisible = useCallback(async (visible) => {
+    const { user } = await api('/auth/visibility', { method: 'PATCH', body: { visible } });
+    setUser(user);
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, signup, login, logout, addPoints }}>
+    <AuthContext.Provider value={{ user, token, loading, signup, login, logout, addPoints, setVisible }}>
       {children}
     </AuthContext.Provider>
   );
