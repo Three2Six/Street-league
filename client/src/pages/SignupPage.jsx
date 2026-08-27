@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import PageBackground from '../components/PageBackground.jsx';
 
 export default function SignupPage() {
   const { signup } = useAuth();
@@ -27,6 +28,7 @@ export default function SignupPage() {
 
   return (
     <div className="auth-page">
+      <PageBackground image="/backgrounds/auth-1.jpg" />
       <form className="auth-form" onSubmit={onSubmit}>
         <h1>Join Street League</h1>
         <p className="auth-subtitle">Pick a nickname — that's how everyone else sees you.</p>

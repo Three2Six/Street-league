@@ -131,6 +131,23 @@ body {
   text-decoration: underline;
 }
 
+/* Page background photos */
+.page-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+.page-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(13, 12, 16, 0.5) 0%, rgba(13, 12, 16, 0.85) 55%, rgba(13, 12, 16, 0.97) 100%);
+}
+
 /* Auth pages */
 .auth-page {
   flex: 1;
@@ -144,6 +161,7 @@ body {
   background: #171a21;
   padding: 28px;
   border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
   display: flex;
   flex-direction: column;
   gap: 12px;
