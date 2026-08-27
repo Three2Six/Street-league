@@ -4,6 +4,7 @@ import L from 'leaflet';
 import { api } from '../api.js';
 import { useWs } from '../context/WsContext.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useLocation } from '../context/LocationContext.jsx';
 
 const DEFAULT_CENTER = [30.2672, -97.7431]; // Austin, TX — used until we know where the user is
 const REPORT_TYPES = [
@@ -41,14 +42,12 @@ function ClickToSetLocation({ enabled, onPick }) {
 
 export default function MapPage() {
   const { user } = useAuth();
-  const { connected, send, subscribe } = useWs();
-  const [myPosition, setMyPosition] = useState(null);
-  const [manualMode, setManualMode] = useState(false);
-  const [geoError, setGeoError] = useState('');
+  const { connected, subscribe } = useWs();
+  const { position: myPosition, speedMps, manualMode, setManualMode, manualSetPosition, geoError } = useLocation();
   const [others, setOthers] = useState({}); // id -> {id, nickname, lat, lng, heading, updated_at}
   const [reports, setReports] = useState({}); // id -> report
   const [pendingReportType, setPendingReportType] = useState(null);
-  const lastSentRef = useRef(0);
+  const [actionError, setActionError] = useState('');
 
   useEffect(() => {
     api('/reports')
@@ -85,39 +84,13 @@ export default function MapPage() {
     return () => unsubs.forEach((fn) => fn());
   }, [subscribe, user.id]);
 
-  // Push our own position to the server, throttled to once every 3s.
-  const publishPosition = (lat, lng, heading) => {
-    setMyPosition([lat, lng]);
-    const now = Date.now();
-    if (now - lastSentRef.current < 3000) return;
-    lastSentRef.current = now;
-    send({ type: 'location', lat, lng, heading });
-  };
-
-  useEffect(() => {
-    if (!('geolocation' in navigator)) {
-      setGeoError('Geolocation is not available in this browser — click the map to set your position.');
-      setManualMode(true);
-      return;
-    }
-    const watchId = navigator.geolocation.watchPosition(
-      (pos) => publishPosition(pos.coords.latitude, pos.coords.longitude, pos.coords.heading),
-      () => {
-        setGeoError('Location permission denied — click the map to set your position instead.');
-        setManualMode(true);
-      },
-      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
-    );
-    return () => navigator.geolocation.clearWatch(watchId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const othersList = useMemo(() => Object.values(others), [others]);
   const reportsList = useMemo(() => Object.values(reports), [reports]);
+  const speedMph = speedMps != null ? Math.round(speedMps * 2.23694) : null;
 
   const startReport = (type) => {
     if (!myPosition) {
-      setGeoError('We need your position first — click the map or enable location to drop a report.');
+      setActionError('We need your position first — click the map or enable location to drop a report.');
       return;
     }
     setPendingReportType(type);
@@ -129,7 +102,7 @@ export default function MapPage() {
     try {
       await api('/reports', { method: 'POST', body: { type: pendingReportType, lat: myPosition[0], lng: myPosition[1], description } });
     } catch (err) {
-      setGeoError(err.message);
+      setActionError(err.message);
     } finally {
       setPendingReportType(null);
     }
@@ -139,13 +112,13 @@ export default function MapPage() {
     try {
       await api(`/reports/${id}/confirm`, { method: 'POST' });
     } catch (err) {
-      setGeoError(err.message);
+      setActionError(err.message);
     }
   };
 
   return (
     <div className="map-page">
-      {geoError && <div className="banner">{geoError}</div>}
+      {(geoError || actionError) && <div className="banner">{actionError || geoError}</div>}
       {!connected && <div className="banner warning">Reconnecting to live updates…</div>}
 
       <MapContainer center={myPosition || DEFAULT_CENTER} zoom={myPosition ? 14 : 11} className="map-container">
@@ -154,7 +127,7 @@ export default function MapPage() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <RecenterOnce position={myPosition} />
-        <ClickToSetLocation enabled={manualMode} onPick={(lat, lng) => publishPosition(lat, lng, null)} />
+        <ClickToSetLocation enabled={manualMode} onPick={manualSetPosition} />
 
         {myPosition && (
           <Marker position={myPosition} icon={divIcon('🚗', 'marker-emoji marker-self')}>
@@ -184,9 +157,12 @@ export default function MapPage() {
       </MapContainer>
 
       <div className="map-toolbar">
-        <button className={`toggle-button ${manualMode ? 'active' : ''}`} onClick={() => setManualMode((m) => !m)}>
-          {manualMode ? 'Manual position: on (click map)' : 'Use GPS'}
-        </button>
+        <div className="toolbar-left">
+          <button className={`toggle-button ${manualMode ? 'active' : ''}`} onClick={() => setManualMode((m) => !m)}>
+            {manualMode ? 'Manual position: on (click map)' : 'Use GPS'}
+          </button>
+          {speedMph != null && <span className="speed-badge">{speedMph} mph</span>}
+        </div>
         <div className="report-buttons">
           {REPORT_TYPES.map((r) => (
             <button key={r.type} onClick={() => startReport(r.type)} title={`Report ${r.label}`}>

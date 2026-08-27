@@ -239,6 +239,12 @@ button.secondary {
   flex-wrap: wrap;
 }
 
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .toggle-button {
   background: #171a21;
   border: 1px solid #2f3646;
@@ -246,6 +252,15 @@ button.secondary {
 
 .toggle-button.active {
   background: #ff5a36;
+}
+
+.speed-badge {
+  background: #171a21;
+  border: 1px solid #2f3646;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .report-buttons {
@@ -366,6 +381,24 @@ button.secondary {
   height: 260px;
   border-radius: 8px;
   overflow: hidden;
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.mode-toggle button {
+  flex: 1;
+  background: #2f3646;
+}
+
+.mode-toggle button.active {
+  background: #ff5a36;
+}
+
+.racing-hint {
+  font-size: 0.85rem;
 }
 
 /* Leaderboard */

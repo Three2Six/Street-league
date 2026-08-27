@@ -25,6 +25,7 @@ export async function initSchema() {
       lat DOUBLE PRECISION NOT NULL,
       lng DOUBLE PRECISION NOT NULL,
       heading DOUBLE PRECISION,
+      speed_mps DOUBLE PRECISION,
       updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
     );
 
@@ -51,10 +52,11 @@ export async function initSchema() {
       id SERIAL PRIMARY KEY,
       creator_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
       name TEXT NOT NULL,
-      start_lat DOUBLE PRECISION NOT NULL,
-      start_lng DOUBLE PRECISION NOT NULL,
-      end_lat DOUBLE PRECISION NOT NULL,
-      end_lng DOUBLE PRECISION NOT NULL,
+      mode TEXT NOT NULL DEFAULT 'route' CHECK (mode IN ('route', 'roll')),
+      start_lat DOUBLE PRECISION,
+      start_lng DOUBLE PRECISION,
+      end_lat DOUBLE PRECISION,
+      end_lng DOUBLE PRECISION,
       status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'active', 'finished', 'cancelled')),
       created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
       started_at TIMESTAMPTZ,
@@ -65,7 +67,9 @@ export async function initSchema() {
       challenge_id INTEGER REFERENCES challenges(id) ON DELETE CASCADE,
       user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
       joined_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      race_started_at TIMESTAMPTZ,
       finished_at TIMESTAMPTZ,
+      top_speed_mps DOUBLE PRECISION,
       points_awarded INTEGER NOT NULL DEFAULT 0,
       PRIMARY KEY (challenge_id, user_id)
     );
@@ -81,5 +85,24 @@ export async function initSchema() {
     CREATE INDEX IF NOT EXISTS idx_reports_expires_at ON reports (expires_at);
     CREATE INDEX IF NOT EXISTS idx_messages_channel_created ON messages (channel, created_at);
     CREATE INDEX IF NOT EXISTS idx_users_points ON users (points DESC);
+  `);
+
+  // Additive migrations for tables that may already exist from before roll races were added.
+  await pool.query(`
+    ALTER TABLE live_locations ADD COLUMN IF NOT EXISTS speed_mps DOUBLE PRECISION;
+    ALTER TABLE challenges ADD COLUMN IF NOT EXISTS mode TEXT NOT NULL DEFAULT 'route';
+    ALTER TABLE challenges ALTER COLUMN start_lat DROP NOT NULL;
+    ALTER TABLE challenges ALTER COLUMN start_lng DROP NOT NULL;
+    ALTER TABLE challenges ALTER COLUMN end_lat DROP NOT NULL;
+    ALTER TABLE challenges ALTER COLUMN end_lng DROP NOT NULL;
+    ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS race_started_at TIMESTAMPTZ;
+    ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS top_speed_mps DOUBLE PRECISION;
+  `);
+  await pool.query(`
+    DO $$ BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'challenges_mode_check') THEN
+        ALTER TABLE challenges ADD CONSTRAINT challenges_mode_check CHECK (mode IN ('route', 'roll'));
+      END IF;
+    END $$;
   `);
 }

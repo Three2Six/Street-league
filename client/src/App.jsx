@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAuth } from './context/AuthContext.jsx';
 import NavBar from './components/NavBar.jsx';
+import RollRaceWatcher from './components/RollRaceWatcher.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import MapPage from './pages/MapPage.jsx';
@@ -20,6 +21,7 @@ export default function App() {
   return (
     <div className="app">
       {user && <NavBar />}
+      {user && <RollRaceWatcher />}
       <div className="app-body">
         <Routes>
           <Route path="/signup" element={user ? <Navigate to="/map" replace /> : <SignupPage />} />

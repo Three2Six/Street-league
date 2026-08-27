@@ -26,7 +26,7 @@ export function initWs(httpServer) {
 
     // Snapshot of everyone currently online so a new client can render the map immediately.
     const { rows } = await pool.query(
-      `SELECT ll.user_id AS id, u.nickname, ll.lat, ll.lng, ll.heading, ll.updated_at
+      `SELECT ll.user_id AS id, u.nickname, ll.lat, ll.lng, ll.heading, ll.speed_mps, ll.updated_at
        FROM live_locations ll JOIN users u ON u.id = ll.user_id`
     );
     send(ws, 'presence:snapshot', rows);
@@ -43,12 +43,13 @@ export function initWs(httpServer) {
         const lat = Number(msg.lat);
         const lng = Number(msg.lng);
         const heading = msg.heading == null ? null : Number(msg.heading);
+        const speedMps = msg.speed == null ? null : Number(msg.speed);
         if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
         await pool.query(
-          `INSERT INTO live_locations (user_id, lat, lng, heading, updated_at)
-           VALUES ($1, $2, $3, $4, now())
-           ON CONFLICT (user_id) DO UPDATE SET lat = $2, lng = $3, heading = $4, updated_at = now()`,
-          [userId, lat, lng, heading]
+          `INSERT INTO live_locations (user_id, lat, lng, heading, speed_mps, updated_at)
+           VALUES ($1, $2, $3, $4, $5, now())
+           ON CONFLICT (user_id) DO UPDATE SET lat = $2, lng = $3, heading = $4, speed_mps = $5, updated_at = now()`,
+          [userId, lat, lng, heading, Number.isFinite(speedMps) ? speedMps : null]
         );
         broadcast('presence:update', {
           id: userId,
@@ -56,6 +57,7 @@ export function initWs(httpServer) {
           lat,
           lng,
           heading,
+          speed_mps: Number.isFinite(speedMps) ? speedMps : null,
           updated_at: new Date().toISOString(),
         });
       }
