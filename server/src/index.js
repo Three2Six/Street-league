@@ -11,6 +11,7 @@ import leaderboardRoutes from './routes/leaderboard.js';
 import messagesRoutes from './routes/messages.js';
 import sosRoutes from './routes/sos.js';
 import cruisesRoutes from './routes/cruises.js';
+import trophiesRoutes from './routes/trophies.js';
 
 const app = express();
 app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173' }));
@@ -24,6 +25,7 @@ app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/messages', messagesRoutes);
 app.use('/api/sos', sosRoutes);
 app.use('/api/cruises', cruisesRoutes);
+app.use('/api/trophies', trophiesRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);

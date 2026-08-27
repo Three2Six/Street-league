@@ -5,10 +5,14 @@ import { api } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWs } from '../context/WsContext.jsx';
 import { useNow } from '../hooks/useNow.js';
+import { mpsToMph as rawMpsToMph } from '../geo.js';
 
 const DEFAULT_CENTER = [30.2672, -97.7431];
 const pointIcon = (emoji) => L.divIcon({ html: emoji, className: 'marker-emoji', iconSize: [28, 28], iconAnchor: [14, 14] });
-const mpsToMph = (mps) => (mps == null ? null : Math.round(mps * 2.23694));
+const mpsToMph = (mps) => {
+  const mph = rawMpsToMph(mps);
+  return mph == null ? null : Math.round(mph);
+};
 
 function PointPicker({ start, end, onPick }) {
   useMapEvents({
@@ -112,10 +116,15 @@ function elapsedLabel(startIso, endMsOrNow) {
   return `${seconds.toFixed(2)}s`;
 }
 
+const MEDALS = { 1: '🥇', 2: '🥈', 3: '🥉' };
+
 function ParticipantLine({ p, challenge, now }) {
+  const medal = p.rank != null ? MEDALS[p.rank] : null;
+
   if (challenge.mode !== 'roll') {
     return (
       <>
+        {medal && <span className="medal">{medal}</span>}
         {p.nickname}
         {p.finished_at ? ` — finished (+${p.points_awarded || 0} pts)` : challenge.status === 'active' ? ' — racing…' : ''}
       </>
@@ -126,6 +135,7 @@ function ParticipantLine({ p, challenge, now }) {
   if (p.finished_at && p.race_started_at) {
     return (
       <>
+        {medal && <span className="medal">{medal}</span>}
         {p.nickname} — {elapsedLabel(p.race_started_at, Date.parse(p.finished_at))}
         {topMph != null ? ` (top ${topMph} mph)` : ''}
         {p.time_source === 'manual' && <span className="manual-badge" title="Typed in by the driver, not auto-detected">📟 self-reported</span>}
@@ -278,19 +288,25 @@ export default function ChallengesPage() {
   const { user } = useAuth();
   const { subscribe } = useWs();
   const [challenges, setChallenges] = useState([]);
+  const [finished, setFinished] = useState([]);
   const now = useNow(500);
 
   const load = () => api('/challenges').then(({ challenges }) => setChallenges(challenges));
+  const loadFinished = () => api('/challenges/finished').then(({ challenges }) => setFinished(challenges));
 
   useEffect(() => {
     load();
+    loadFinished();
   }, []);
 
   useEffect(() => {
     const unsubs = [
       subscribe('challenge:new', load),
       subscribe('challenge:update', load),
-      subscribe('challenge:finished', load),
+      subscribe('challenge:finished', () => {
+        load();
+        loadFinished();
+      }),
     ];
     return () => unsubs.forEach((fn) => fn());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -307,6 +323,15 @@ export default function ChallengesPage() {
         {challenges.map((c) => (
           <ChallengeCard key={c.id} challenge={c} currentUserId={user.id} currentUserVisible={user.visible} onChanged={load} now={now} />
         ))}
+
+        {finished.length > 0 && (
+          <>
+            <h2 className="recent-results-heading">Recent results 🏁</h2>
+            {finished.map((c) => (
+              <ChallengeCard key={c.id} challenge={c} currentUserId={user.id} currentUserVisible={user.visible} onChanged={load} now={now} />
+            ))}
+          </>
+        )}
       </div>
       <CreateChallengeForm onCreated={load} />
     </div>

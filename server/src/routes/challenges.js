@@ -6,7 +6,7 @@ import { broadcast } from '../ws.js';
 const router = Router();
 const POINTS_BY_RANK = [100, 60, 30];
 const POINTS_FOR_FINISHING = 10;
-const PARTICIPANT_FIELDS = `p.user_id, u.nickname, p.joined_at, p.race_started_at, p.finished_at, p.top_speed_mps, p.time_source, p.points_awarded`;
+const PARTICIPANT_FIELDS = `p.user_id, u.nickname, p.joined_at, p.race_started_at, p.finished_at, p.top_speed_mps, p.time_source, p.points_awarded, p.rank`;
 const MPH_TO_MPS = 0.44704;
 
 async function isVisible(userId) {
@@ -14,23 +14,43 @@ async function isVisible(userId) {
   return Boolean(rows[0]?.visible);
 }
 
+const PARTICIPANTS_SUBQUERY = `
+  COALESCE(
+    (SELECT json_agg(json_build_object(
+       'user_id', p.user_id, 'nickname', pu.nickname, 'joined_at', p.joined_at,
+       'race_started_at', p.race_started_at, 'finished_at', p.finished_at,
+       'top_speed_mps', p.top_speed_mps, 'time_source', p.time_source, 'points_awarded', p.points_awarded,
+       'rank', p.rank
+     ) ORDER BY p.finished_at ASC NULLS LAST, p.joined_at ASC)
+     FROM challenge_participants p JOIN users pu ON pu.id = p.user_id
+     WHERE p.challenge_id = c.id),
+    '[]'
+  ) AS participants`;
+
 router.get('/', requireAuth, async (req, res) => {
   const { rows } = await pool.query(
     `SELECT c.*, u.nickname AS creator_nickname,
             (SELECT count(*) FROM challenge_participants p WHERE p.challenge_id = c.id) AS participant_count,
-            COALESCE(
-              (SELECT json_agg(json_build_object(
-                 'user_id', p.user_id, 'nickname', pu.nickname, 'joined_at', p.joined_at,
-                 'race_started_at', p.race_started_at, 'finished_at', p.finished_at,
-                 'top_speed_mps', p.top_speed_mps, 'time_source', p.time_source, 'points_awarded', p.points_awarded
-               ) ORDER BY p.finished_at ASC NULLS LAST, p.joined_at ASC)
-               FROM challenge_participants p JOIN users pu ON pu.id = p.user_id
-               WHERE p.challenge_id = c.id),
-              '[]'
-            ) AS participants
+            ${PARTICIPANTS_SUBQUERY}
      FROM challenges c LEFT JOIN users u ON u.id = c.creator_id
      WHERE c.status IN ('open', 'active')
      ORDER BY c.created_at DESC`
+  );
+  res.json({ challenges: rows });
+});
+
+// Finished races vanish from the open/active list the instant they score — this is the only
+// place a final podium (medals, times, top speeds) is actually visible, so bragging rights have
+// somewhere to live beyond the winner-only trophy case.
+router.get('/finished', requireAuth, async (req, res) => {
+  const { rows } = await pool.query(
+    `SELECT c.*, u.nickname AS creator_nickname,
+            (SELECT count(*) FROM challenge_participants p WHERE p.challenge_id = c.id) AS participant_count,
+            ${PARTICIPANTS_SUBQUERY}
+     FROM challenges c LEFT JOIN users u ON u.id = c.creator_id
+     WHERE c.status = 'finished' AND c.finished_at > now() - interval '24 hours'
+     ORDER BY c.finished_at DESC
+     LIMIT 20`
   );
   res.json({ challenges: rows });
 });
@@ -122,7 +142,7 @@ router.post('/:id/finish', requireAuth, async (req, res) => {
       ? await pool.query(
           `UPDATE challenge_participants
            SET finished_at = $4, race_started_at = $3, time_source = 'manual',
-               top_speed_mps = GREATEST(COALESCE(top_speed_mps, 0), COALESCE($5::double precision, 0))
+               top_speed_mps = GREATEST(top_speed_mps, $5::double precision)
            WHERE challenge_id = $1 AND user_id = $2 AND finished_at IS NULL
            RETURNING user_id`,
           [challengeId, req.userId, new Date(now.getTime() - elapsedSeconds * 1000), now, topSpeedMps]
@@ -155,7 +175,7 @@ router.post('/:id/launch', requireAuth, async (req, res) => {
 
   const updated = await pool.query(
     `UPDATE challenge_participants
-     SET race_started_at = now(), top_speed_mps = GREATEST(COALESCE(top_speed_mps, 0), COALESCE($3::double precision, 0))
+     SET race_started_at = now(), top_speed_mps = GREATEST(top_speed_mps, $3::double precision)
      WHERE challenge_id = $1 AND user_id = $2 AND race_started_at IS NULL
      RETURNING user_id`,
     [challengeId, req.userId, Number.isFinite(speed) ? speed : null]
@@ -178,7 +198,7 @@ router.post('/:id/lift', requireAuth, async (req, res) => {
 
   const updated = await pool.query(
     `UPDATE challenge_participants
-     SET finished_at = now(), top_speed_mps = GREATEST(COALESCE(top_speed_mps, 0), COALESCE($3::double precision, 0))
+     SET finished_at = now(), top_speed_mps = GREATEST(top_speed_mps, $3::double precision)
      WHERE challenge_id = $1 AND user_id = $2 AND race_started_at IS NOT NULL AND finished_at IS NULL
      RETURNING user_id`,
     [challengeId, req.userId, Number.isFinite(topSpeed) ? topSpeed : null]
@@ -250,11 +270,11 @@ async function scoreAndFinishChallenge(challengeId) {
 
   for (let i = 0; i < finishers.length; i++) {
     const points = POINTS_BY_RANK[i] ?? POINTS_FOR_FINISHING;
-    await pool.query(`UPDATE challenge_participants SET points_awarded = $1 WHERE challenge_id = $2 AND user_id = $3`, [
-      points,
-      challengeId,
-      finishers[i].user_id,
-    ]);
+    const rank = i + 1;
+    await pool.query(
+      `UPDATE challenge_participants SET points_awarded = $1, rank = $2 WHERE challenge_id = $3 AND user_id = $4`,
+      [points, rank, challengeId, finishers[i].user_id]
+    );
     await pool.query(`UPDATE users SET points = points + $1 WHERE id = $2`, [points, finishers[i].user_id]);
   }
 

@@ -519,6 +519,14 @@ button.secondary {
   font-size: 0.9rem;
 }
 
+.medal {
+  margin-right: 4px;
+}
+
+.recent-results-heading {
+  margin-top: 28px;
+}
+
 .manual-badge {
   font-size: 0.75rem;
   color: #ffb84d;
@@ -622,6 +630,66 @@ button.secondary {
 
 .leaderboard-table tr.me {
   background: #ff5a3622;
+}
+
+.records-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+
+.record-card {
+  background: #171a21;
+  border: 1px solid #262b36;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.record-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #9aa1b0;
+  margin-bottom: 6px;
+}
+
+.record-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffb84d;
+  font-variant-numeric: tabular-nums;
+}
+
+.trophy-case-heading {
+  margin: 32px 0 12px;
+}
+
+.trophy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 640px;
+}
+
+.trophy-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #171a21;
+  border: 1px solid #262b36;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.trophy-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.trophy-name {
+  font-weight: 600;
 }
 
 /* Chat */

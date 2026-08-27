@@ -9,14 +9,17 @@ router.get('/', requireAuth, async (req, res) => {
   const scope = SCOPES.has(req.query.scope) ? req.query.scope : 'world';
   const value = req.query.value ? String(req.query.value) : null;
 
-  let query = `SELECT id, nickname, points, city, state, country FROM users`;
+  let query = `
+    SELECT u.id, u.nickname, u.points, u.city, u.state, u.country,
+           (SELECT count(*) FROM challenge_participants p WHERE p.user_id = u.id AND p.rank = 1) AS wins
+    FROM users u`;
   const params = [];
   if (scope !== 'world') {
     if (!value) return res.status(400).json({ error: `value is required when scope=${scope}` });
     params.push(value);
-    query += ` WHERE ${scope} = $1`;
+    query += ` WHERE u.${scope} = $1`;
   }
-  query += ` ORDER BY points DESC, nickname ASC LIMIT 100`;
+  query += ` ORDER BY u.points DESC, u.nickname ASC LIMIT 100`;
 
   const { rows } = await pool.query(query, params);
   res.json({ scope, value, leaderboard: rows });

@@ -6,7 +6,7 @@ import { useWs } from '../context/WsContext.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
 import { DEVICES, isBluetoothSupported } from '../telemetry/devices.js';
-import { distanceMiles } from '../geo.js';
+import { distanceMiles, mpsToMph } from '../geo.js';
 
 const DEFAULT_CENTER = [30.2672, -97.7431]; // Austin, TX — used until we know where the user is
 const REPORT_TYPES = [
@@ -112,7 +112,8 @@ export default function MapPage() {
 
   const othersList = useMemo(() => Object.values(others), [others]);
   const reportsList = useMemo(() => Object.values(reports), [reports]);
-  const speedMph = speedMps != null ? Math.round(speedMps * 2.23694) : null;
+  const speedMphRaw = mpsToMph(speedMps);
+  const speedMph = speedMphRaw == null ? null : Math.round(speedMphRaw);
   const sosList = useMemo(() => Object.values(sosAlerts), [sosAlerts]);
   const mySos = useMemo(() => sosList.find((a) => a.user_id === user.id), [sosList, user.id]);
   const othersSos = useMemo(() => sosList.filter((a) => a.user_id !== user.id), [sosList, user.id]);

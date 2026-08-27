@@ -1,3 +1,7 @@
+export function mpsToMph(mps) {
+  return mps == null ? null : mps * 2.23694;
+}
+
 export function distanceMiles(lat1, lng1, lat2, lng2) {
   const R = 3958.7613; // Earth radius in miles
   const toRad = (deg) => (deg * Math.PI) / 180;

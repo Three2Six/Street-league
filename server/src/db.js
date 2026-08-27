@@ -73,6 +73,7 @@ export async function initSchema() {
       top_speed_mps DOUBLE PRECISION,
       time_source TEXT NOT NULL DEFAULT 'gps' CHECK (time_source IN ('gps', 'manual')),
       points_awarded INTEGER NOT NULL DEFAULT 0,
+      rank INTEGER,
       PRIMARY KEY (challenge_id, user_id)
     );
 
@@ -134,7 +135,9 @@ export async function initSchema() {
     ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS race_started_at TIMESTAMPTZ;
     ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS top_speed_mps DOUBLE PRECISION;
     ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS time_source TEXT NOT NULL DEFAULT 'gps';
+    ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS rank INTEGER;
     ALTER TABLE users ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+    CREATE INDEX IF NOT EXISTS idx_challenge_participants_rank ON challenge_participants (user_id, rank);
   `);
   await pool.query(`
     DO $$ BEGIN
