@@ -9,6 +9,7 @@ import ChallengesPage from './pages/ChallengesPage.jsx';
 import CruisesPage from './pages/CruisesPage.jsx';
 import LeaderboardPage from './pages/LeaderboardPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
+import ContactPage from './pages/ContactPage.jsx';
 
 function RequireAuth({ children }) {
   const { user, loading } = useAuth();
@@ -27,6 +28,7 @@ export default function App() {
         <Routes>
           <Route path="/signup" element={user ? <Navigate to="/map" replace /> : <SignupPage />} />
           <Route path="/login" element={user ? <Navigate to="/map" replace /> : <LoginPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route
             path="/map"
             element={

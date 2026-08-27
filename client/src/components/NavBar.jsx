@@ -28,6 +28,7 @@ export default function NavBar() {
         <NavLink to="/cruises" className={({ isActive }) => (isActive ? 'active' : '')}>Cruises</NavLink>
         <NavLink to="/leaderboard" className={({ isActive }) => (isActive ? 'active' : '')}>Leaderboard</NavLink>
         <NavLink to="/chat" className={({ isActive }) => (isActive ? 'active' : '')}>Chat</NavLink>
+        <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>Contact</NavLink>
       </div>
       <div className="navbar-user">
         <button

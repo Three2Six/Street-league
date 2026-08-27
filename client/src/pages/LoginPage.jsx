@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
-import PageBackground from '../components/PageBackground.jsx';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -28,7 +27,6 @@ export default function LoginPage() {
 
   return (
     <div className="auth-page">
-      <PageBackground image="/backgrounds/auth-1.jpg" />
       <form className="auth-form" onSubmit={onSubmit}>
         <h1>Welcome back</h1>
         {error && <div className="error-banner">{error}</div>}
@@ -43,6 +41,9 @@ export default function LoginPage() {
         <button type="submit" disabled={submitting}>{submitting ? 'Logging in…' : 'Log in'}</button>
         <p className="auth-switch">
           New here? <Link to="/signup">Create an account</Link>
+        </p>
+        <p className="auth-switch">
+          <Link to="/contact">Contact us</Link>
         </p>
       </form>
     </div>
