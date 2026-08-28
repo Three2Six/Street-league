@@ -1,9 +1,7 @@
-// Mirrors server/src/access.js — a driver has access if they've paid (once, ever) or their
-// free trial hasn't expired yet.
+// The server computes this (server/src/access.js) and sends it as user.active — it depends on
+// BETA_ENDS_AT, a server-only env var, so the client can't safely re-derive it itself.
 export function hasActiveAccess(user) {
-  if (!user) return false;
-  if (user.paid_at) return true;
-  return Boolean(user.trial_ends_at) && new Date(user.trial_ends_at) > new Date();
+  return Boolean(user?.active);
 }
 
 export function trialDaysLeft(user) {

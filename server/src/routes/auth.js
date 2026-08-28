@@ -5,8 +5,13 @@ import { pool } from '../db.js';
 import { signToken, requireAuth } from '../middleware/auth.js';
 import { broadcast } from '../ws.js';
 import { VALID_AVATARS } from '../avatars.js';
+import { hasActiveAccess } from '../access.js';
 
 const router = Router();
+
+// The client trusts this computed flag rather than re-deriving access itself, since it depends
+// on BETA_ENDS_AT — a server-only env var the client has no way to see.
+const withActive = (user) => ({ ...user, active: hasActiveAccess(user) });
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -37,7 +42,7 @@ router.post('/signup', authLimiter, async (req, res) => {
        RETURNING id, nickname, email, city, state, country, points, visible, avatar, trial_ends_at, paid_at, created_at`,
       [nickname, email.toLowerCase(), passwordHash, city || null, state || null, country || null]
     );
-    const user = rows[0];
+    const user = withActive(rows[0]);
     res.status(201).json({ token: signToken(user), user });
   } catch (err) {
     if (err.code === '23505') {
@@ -63,7 +68,7 @@ router.post('/login', authLimiter, async (req, res) => {
   if (!ok) return res.status(401).json({ error: 'Invalid email or password' });
 
   delete user.password_hash;
-  res.json({ token: signToken(user), user });
+  res.json({ token: signToken(user), user: withActive(user) });
 });
 
 router.get('/me', requireAuth, async (req, res) => {
@@ -72,7 +77,7 @@ router.get('/me', requireAuth, async (req, res) => {
     [req.userId]
   );
   if (!rows[0]) return res.status(404).json({ error: 'User not found' });
-  res.json({ user: rows[0] });
+  res.json({ user: withActive(rows[0]) });
 });
 
 // "In the game" / "off the grid" — going invisible pulls you off everyone's map immediately
@@ -91,7 +96,7 @@ router.patch('/visibility', requireAuth, async (req, res) => {
     broadcast('presence:leave', { id: req.userId });
   }
 
-  res.json({ user: rows[0] });
+  res.json({ user: withActive(rows[0]) });
 });
 
 router.patch('/avatar', requireAuth, async (req, res) => {
@@ -116,7 +121,7 @@ router.patch('/avatar', requireAuth, async (req, res) => {
     broadcast('presence:update', { id: req.userId, nickname: rows[0].nickname, avatar, ...locRows[0] });
   }
 
-  res.json({ user: rows[0] });
+  res.json({ user: withActive(rows[0]) });
 });
 
 export default router;
