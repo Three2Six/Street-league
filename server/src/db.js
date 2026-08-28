@@ -20,6 +20,7 @@ export async function initSchema() {
       country TEXT,
       points INTEGER NOT NULL DEFAULT 0,
       visible BOOLEAN NOT NULL DEFAULT true,
+      avatar TEXT NOT NULL DEFAULT '🚗',
       created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     );
 
@@ -139,6 +140,7 @@ export async function initSchema() {
     ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS time_source TEXT NOT NULL DEFAULT 'gps';
     ALTER TABLE challenge_participants ADD COLUMN IF NOT EXISTS rank INTEGER;
     ALTER TABLE users ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar TEXT NOT NULL DEFAULT '🚗';
     CREATE INDEX IF NOT EXISTS idx_challenge_participants_rank ON challenge_participants (user_id, rank);
   `);
   await pool.query(`

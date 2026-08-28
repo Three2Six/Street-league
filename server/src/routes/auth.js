@@ -4,6 +4,7 @@ import rateLimit from 'express-rate-limit';
 import { pool } from '../db.js';
 import { signToken, requireAuth } from '../middleware/auth.js';
 import { broadcast } from '../ws.js';
+import { VALID_AVATARS } from '../avatars.js';
 
 const router = Router();
 
@@ -33,7 +34,7 @@ router.post('/signup', authLimiter, async (req, res) => {
     const { rows } = await pool.query(
       `INSERT INTO users (nickname, email, password_hash, city, state, country)
        VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING id, nickname, email, city, state, country, points, visible, created_at`,
+       RETURNING id, nickname, email, city, state, country, points, visible, avatar, created_at`,
       [nickname, email.toLowerCase(), passwordHash, city || null, state || null, country || null]
     );
     const user = rows[0];
@@ -51,7 +52,7 @@ router.post('/login', authLimiter, async (req, res) => {
   if (!email || !password) return res.status(400).json({ error: 'Email and password are required' });
 
   const { rows } = await pool.query(
-    `SELECT id, nickname, email, password_hash, city, state, country, points, visible, created_at
+    `SELECT id, nickname, email, password_hash, city, state, country, points, visible, avatar, created_at
      FROM users WHERE email = $1`,
     [String(email).toLowerCase()]
   );
@@ -67,7 +68,7 @@ router.post('/login', authLimiter, async (req, res) => {
 
 router.get('/me', requireAuth, async (req, res) => {
   const { rows } = await pool.query(
-    `SELECT id, nickname, email, city, state, country, points, visible, created_at FROM users WHERE id = $1`,
+    `SELECT id, nickname, email, city, state, country, points, visible, avatar, created_at FROM users WHERE id = $1`,
     [req.userId]
   );
   if (!rows[0]) return res.status(404).json({ error: 'User not found' });
@@ -80,7 +81,7 @@ router.patch('/visibility', requireAuth, async (req, res) => {
   const visible = Boolean(req.body?.visible);
   const { rows } = await pool.query(
     `UPDATE users SET visible = $1 WHERE id = $2
-     RETURNING id, nickname, email, city, state, country, points, visible, created_at`,
+     RETURNING id, nickname, email, city, state, country, points, visible, avatar, created_at`,
     [visible, req.userId]
   );
   if (!rows[0]) return res.status(404).json({ error: 'User not found' });
@@ -88,6 +89,31 @@ router.patch('/visibility', requireAuth, async (req, res) => {
   if (!visible) {
     await pool.query('DELETE FROM live_locations WHERE user_id = $1', [req.userId]);
     broadcast('presence:leave', { id: req.userId });
+  }
+
+  res.json({ user: rows[0] });
+});
+
+router.patch('/avatar', requireAuth, async (req, res) => {
+  const avatar = req.body?.avatar;
+  if (!VALID_AVATARS.includes(avatar)) {
+    return res.status(400).json({ error: 'Invalid avatar choice' });
+  }
+  const { rows } = await pool.query(
+    `UPDATE users SET avatar = $1 WHERE id = $2
+     RETURNING id, nickname, email, city, state, country, points, visible, avatar, created_at`,
+    [avatar, req.userId]
+  );
+  if (!rows[0]) return res.status(404).json({ error: 'User not found' });
+
+  // Refresh the marker immediately for anyone already seeing this driver on the map, instead of
+  // waiting for their next GPS tick to carry the new avatar along.
+  const { rows: locRows } = await pool.query(
+    'SELECT lat, lng, heading, speed_mps, updated_at FROM live_locations WHERE user_id = $1',
+    [req.userId]
+  );
+  if (locRows[0]) {
+    broadcast('presence:update', { id: req.userId, nickname: rows[0].nickname, avatar, ...locRows[0] });
   }
 
   res.json({ user: rows[0] });

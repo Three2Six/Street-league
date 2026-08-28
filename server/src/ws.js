@@ -26,7 +26,7 @@ export function initWs(httpServer) {
 
     // Snapshot of everyone currently online so a new client can render the map immediately.
     const { rows } = await pool.query(
-      `SELECT ll.user_id AS id, u.nickname, ll.lat, ll.lng, ll.heading, ll.speed_mps, ll.updated_at
+      `SELECT ll.user_id AS id, u.nickname, u.avatar, ll.lat, ll.lng, ll.heading, ll.speed_mps, ll.updated_at
        FROM live_locations ll JOIN users u ON u.id = ll.user_id
        WHERE u.visible`
     );
@@ -48,7 +48,8 @@ export function initWs(httpServer) {
         if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
 
         // Off the grid: don't track or broadcast position while the user has visibility off.
-        const { rows: urows } = await pool.query('SELECT visible FROM users WHERE id = $1', [userId]);
+        // Fetched fresh (not from the JWT) so a mid-session avatar change shows up immediately.
+        const { rows: urows } = await pool.query('SELECT visible, avatar FROM users WHERE id = $1', [userId]);
         if (!urows[0]?.visible) return;
 
         await pool.query(
@@ -60,6 +61,7 @@ export function initWs(httpServer) {
         broadcast('presence:update', {
           id: userId,
           nickname,
+          avatar: urows[0].avatar,
           lat,
           lng,
           heading,

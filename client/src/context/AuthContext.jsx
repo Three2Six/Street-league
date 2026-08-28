@@ -42,6 +42,10 @@ export function AuthProvider({ children }) {
     const { user } = await api('/auth/visibility', { method: 'PATCH', body: { visible } });
     setUser(user);
   }, []);
+  const setAvatar = useCallback(async (avatar) => {
+    const { user } = await api('/auth/avatar', { method: 'PATCH', body: { avatar } });
+    setUser(user);
+  }, []);
   // Points change server-side whenever any challenge finishes (not just ones this tab caused,
   // e.g. a challenge someone else just scored you into) — refetch instead of guessing the delta.
   const refreshMe = useCallback(async () => {
@@ -54,7 +58,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, signup, login, logout, addPoints, setVisible, refreshMe }}>
+    <AuthContext.Provider value={{ user, token, loading, signup, login, logout, addPoints, setVisible, setAvatar, refreshMe }}>
       {children}
     </AuthContext.Provider>
   );

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWs } from '../context/WsContext.jsx';
 import Logo from './Logo.jsx';
+import AvatarPicker from './AvatarPicker.jsx';
 
 export default function NavBar() {
   const { user, logout, setVisible } = useAuth();
@@ -42,6 +43,7 @@ export default function NavBar() {
           {user.visible ? 'In the game' : 'Off the grid'}
         </button>
         <span className={`status-dot ${connected ? 'online' : 'offline'}`} title={connected ? 'Live' : 'Reconnecting…'} />
+        <AvatarPicker />
         <span>{user.nickname}</span>
         <span className="points-badge">{user.points} pts</span>
         <button onClick={logout} className="link-button">Log out</button>

@@ -221,13 +221,13 @@ export default function MapPage() {
         <FlyTo target={flyTarget} />
 
         {myPosition && (
-          <Marker position={myPosition} icon={divIcon('🚗', 'marker-emoji marker-self')}>
+          <Marker position={myPosition} icon={divIcon(user.avatar || '🚗', 'marker-emoji marker-self')}>
             <Popup>You ({user.nickname})</Popup>
           </Marker>
         )}
 
         {othersList.map((u) => (
-          <Marker key={u.id} position={[u.lat, u.lng]} icon={divIcon('🚙', 'marker-emoji')}>
+          <Marker key={u.id} position={[u.lat, u.lng]} icon={divIcon(u.avatar || '🚙', 'marker-emoji')}>
             <Popup>{u.nickname}</Popup>
           </Marker>
         ))}
