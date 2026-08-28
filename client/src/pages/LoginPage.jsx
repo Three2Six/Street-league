@@ -46,7 +46,7 @@ export default function LoginPage() {
           New here? <Link to="/signup">Create an account</Link>
         </p>
         <p className="auth-switch">
-          <Link to="/contact">Contact us</Link>
+          <Link to="/contact">Contact us</Link> · <Link to="/disclaimer">Disclaimer</Link>
         </p>
       </form>
     </div>

@@ -12,7 +12,7 @@ export default function ContactPage() {
           Email: <a href="mailto:support@streetleague.app">support@streetleague.app</a>
         </p>
         <p className="auth-switch">
-          <Link to="/login">Back to login</Link>
+          <Link to="/login">Back to login</Link> · <Link to="/disclaimer">Disclaimer</Link>
         </p>
       </div>
     </div>

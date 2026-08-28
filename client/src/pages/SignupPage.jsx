@@ -7,6 +7,7 @@ export default function SignupPage() {
   const { signup } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ nickname: '', email: '', password: '', city: '', state: '', country: '' });
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -17,7 +18,7 @@ export default function SignupPage() {
     setError('');
     setSubmitting(true);
     try {
-      await signup(form);
+      await signup({ ...form, agreedToTerms });
       navigate('/map');
     } catch (err) {
       setError(err.message);
@@ -60,12 +61,16 @@ export default function SignupPage() {
             <input value={form.country} onChange={update('country')} placeholder="USA" />
           </label>
         </div>
-        <button type="submit" disabled={submitting}>{submitting ? 'Creating account…' : 'Sign up'}</button>
+        <label className="checkbox-label">
+          <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} />
+          I have read and agree to the <Link to="/disclaimer" target="_blank">Terms &amp; Liability Disclaimer</Link>
+        </label>
+        <button type="submit" disabled={submitting || !agreedToTerms}>{submitting ? 'Creating account…' : 'Sign up'}</button>
         <p className="auth-switch">
           Already have an account? <Link to="/login">Log in</Link>
         </p>
         <p className="auth-switch">
-          <Link to="/contact">Contact us</Link>
+          <Link to="/contact">Contact us</Link> · <Link to="/disclaimer">Disclaimer</Link>
         </p>
       </form>
     </div>

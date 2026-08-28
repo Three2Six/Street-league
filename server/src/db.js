@@ -24,6 +24,7 @@ export async function initSchema() {
       trial_ends_at TIMESTAMPTZ NOT NULL DEFAULT (now() + interval '3 days'),
       paid_at TIMESTAMPTZ,
       stripe_customer_id TEXT,
+      agreed_to_terms_at TIMESTAMPTZ,
       created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     );
 
@@ -157,6 +158,7 @@ export async function initSchema() {
     ALTER TABLE users ADD COLUMN IF NOT EXISTS trial_ends_at TIMESTAMPTZ NOT NULL DEFAULT (now() + interval '3 days');
     ALTER TABLE users ADD COLUMN IF NOT EXISTS paid_at TIMESTAMPTZ;
     ALTER TABLE users ADD COLUMN IF NOT EXISTS stripe_customer_id TEXT;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS agreed_to_terms_at TIMESTAMPTZ;
     CREATE INDEX IF NOT EXISTS idx_challenge_participants_rank ON challenge_participants (user_id, rank);
   `);
   await pool.query(`

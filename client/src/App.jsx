@@ -13,6 +13,7 @@ import CruisesPage from './pages/CruisesPage.jsx';
 import LeaderboardPage from './pages/LeaderboardPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+import DisclaimerPage from './pages/DisclaimerPage.jsx';
 import PaywallPage from './pages/PaywallPage.jsx';
 import BillingSuccessPage from './pages/BillingSuccessPage.jsx';
 import AdminStatsPage from './pages/AdminStatsPage.jsx';
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/signup" element={user ? <Navigate to="/map" replace /> : <SignupPage />} />
           <Route path="/login" element={user ? <Navigate to="/map" replace /> : <LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/disclaimer" element={<DisclaimerPage />} />
           <Route path="/admin/stats" element={<AdminStatsPage />} />
           <Route
             path="/billing/success"

@@ -23,7 +23,7 @@ const authLimiter = rateLimit({
 const NICKNAME_RE = /^[A-Za-z0-9_-]{3,20}$/;
 
 router.post('/signup', authLimiter, async (req, res) => {
-  const { nickname, email, password, city, state, country } = req.body || {};
+  const { nickname, email, password, city, state, country, agreedToTerms } = req.body || {};
   if (!nickname || !NICKNAME_RE.test(nickname)) {
     return res.status(400).json({ error: 'Nickname must be 3-20 characters: letters, numbers, _ or -' });
   }
@@ -33,12 +33,15 @@ router.post('/signup', authLimiter, async (req, res) => {
   if (!password || typeof password !== 'string' || password.length < 8) {
     return res.status(400).json({ error: 'Password must be at least 8 characters' });
   }
+  if (agreedToTerms !== true) {
+    return res.status(400).json({ error: 'You must agree to the Terms & Liability Disclaimer to create an account' });
+  }
 
   const passwordHash = await bcrypt.hash(password, 12);
   try {
     const { rows } = await pool.query(
-      `INSERT INTO users (nickname, email, password_hash, city, state, country)
-       VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO users (nickname, email, password_hash, city, state, country, agreed_to_terms_at)
+       VALUES ($1, $2, $3, $4, $5, $6, now())
        RETURNING id, nickname, email, city, state, country, points, visible, avatar, trial_ends_at, paid_at, created_at`,
       [nickname, email.toLowerCase(), passwordHash, city || null, state || null, country || null]
     );
