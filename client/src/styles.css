@@ -43,6 +43,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .brand-icon {
@@ -55,6 +56,7 @@ body {
   font-size: 1.1rem;
   letter-spacing: 0.01em;
   color: #ff5a36;
+  white-space: nowrap;
 }
 
 .navbar-links {
@@ -194,6 +196,16 @@ body {
 
 .avatar-option:disabled {
   opacity: 0.5;
+}
+
+.trial-badge {
+  background: #ffb84d22;
+  border: 1px solid #ffb84d55;
+  color: #ffb84d;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .link-button {

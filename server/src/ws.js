@@ -1,6 +1,7 @@
 import { WebSocketServer } from 'ws';
 import { verifyToken } from './middleware/auth.js';
 import { pool } from './db.js';
+import { hasActiveAccess } from './access.js';
 
 // userId -> Set<WebSocket>
 const clients = new Map();
@@ -21,6 +22,13 @@ export function initWs(httpServer) {
 
     const userId = payload.sub;
     const nickname = payload.nickname;
+
+    const { rows: accessRows } = await pool.query('SELECT paid_at, trial_ends_at FROM users WHERE id = $1', [userId]);
+    if (!accessRows[0] || !hasActiveAccess(accessRows[0])) {
+      ws.close(4002, 'Trial expired');
+      return;
+    }
+
     if (!clients.has(userId)) clients.set(userId, new Set());
     clients.get(userId).add(ws);
 

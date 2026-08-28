@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { pool } from '../db.js';
-import { requireAuth } from '../middleware/auth.js';
+import { requireActive as requireAuth } from '../middleware/auth.js';
 import { broadcast, broadcastTo } from '../ws.js';
 import { distanceMeters } from '../utils/geo.js';
 

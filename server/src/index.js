@@ -14,13 +14,20 @@ import messagesRoutes from './routes/messages.js';
 import sosRoutes from './routes/sos.js';
 import cruisesRoutes from './routes/cruises.js';
 import trophiesRoutes from './routes/trophies.js';
+import billingRoutes, { stripeWebhook } from './routes/billing.js';
 
 const app = express();
 app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173' }));
+
+// Mounted before express.json(): Stripe's signature check needs the exact raw request bytes,
+// which body-parsing would otherwise consume.
+app.post('/api/billing/webhook', express.raw({ type: 'application/json' }), stripeWebhook);
+
 app.use(express.json());
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 app.use('/api/auth', authRoutes);
+app.use('/api/billing', billingRoutes);
 app.use('/api/reports', reportsRoutes);
 app.use('/api/challenges', challengesRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { pool } from '../db.js';
-import { requireAuth } from '../middleware/auth.js';
+import { requireActive as requireAuth } from '../middleware/auth.js';
 
 const router = Router();
 const SCOPES = new Set(['city', 'state', 'country', 'world']);

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWs } from '../context/WsContext.jsx';
+import { trialDaysLeft } from '../access.js';
+import { api } from '../api.js';
 import Logo from './Logo.jsx';
 import AvatarPicker from './AvatarPicker.jsx';
 
@@ -9,6 +11,18 @@ export default function NavBar() {
   const { user, logout, setVisible } = useAuth();
   const { connected } = useWs();
   const [toggling, setToggling] = useState(false);
+  const [upgrading, setUpgrading] = useState(false);
+  const daysLeft = trialDaysLeft(user);
+
+  const upgrade = async () => {
+    setUpgrading(true);
+    try {
+      const { url } = await api('/billing/checkout', { method: 'POST' });
+      window.location.href = url;
+    } catch {
+      setUpgrading(false);
+    }
+  };
 
   const toggleVisibility = async () => {
     setToggling(true);
@@ -33,6 +47,11 @@ export default function NavBar() {
         <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>Contact</NavLink>
       </div>
       <div className="navbar-user">
+        {!user.paid_at && (
+          <button className="trial-badge" onClick={upgrade} disabled={upgrading}>
+            {upgrading ? 'Redirecting…' : `${daysLeft}d trial left — Upgrade`}
+          </button>
+        )}
         <button
           className={`visibility-toggle ${user.visible ? 'on' : 'off'}`}
           onClick={toggleVisibility}
