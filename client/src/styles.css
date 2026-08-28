@@ -45,6 +45,11 @@ body {
   gap: 10px;
 }
 
+.brand-icon {
+  border-radius: 7px;
+  display: block;
+}
+
 .brand-wordmark {
   font-weight: 700;
   font-size: 1.1rem;
@@ -179,8 +184,17 @@ body {
   border: 1px solid #262b36;
 }
 
+.auth-logo {
+  width: 160px;
+  max-width: 100%;
+  align-self: center;
+  border-radius: 14px;
+  margin-bottom: -4px;
+}
+
 .auth-form h1 {
   margin: 0;
+  text-align: center;
 }
 
 .auth-subtitle {
