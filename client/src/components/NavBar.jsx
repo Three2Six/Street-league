@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWs } from '../context/WsContext.jsx';
+import Logo from './Logo.jsx';
 
 export default function NavBar() {
   const { user, logout, setVisible } = useAuth();
@@ -21,7 +22,7 @@ export default function NavBar() {
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">🏁 Street League</div>
+      <Logo />
       <div className="navbar-links">
         <NavLink to="/map" className={({ isActive }) => (isActive ? 'active' : '')}>Map</NavLink>
         <NavLink to="/challenges" className={({ isActive }) => (isActive ? 'active' : '')}>Challenges</NavLink>

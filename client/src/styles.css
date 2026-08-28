@@ -39,9 +39,16 @@ body {
   border-bottom: 1px solid #262b36;
 }
 
-.navbar-brand {
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-wordmark {
   font-weight: 700;
   font-size: 1.1rem;
+  letter-spacing: 0.01em;
   color: #ff5a36;
 }
 
