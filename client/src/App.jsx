@@ -1,6 +1,8 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext.jsx';
 import { hasActiveAccess } from './access.js';
+import { trackPageView } from './track.js';
 import NavBar from './components/NavBar.jsx';
 import RollRaceWatcher from './components/RollRaceWatcher.jsx';
 import SignupPage from './pages/SignupPage.jsx';
@@ -13,6 +15,7 @@ import ChatPage from './pages/ChatPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import PaywallPage from './pages/PaywallPage.jsx';
 import BillingSuccessPage from './pages/BillingSuccessPage.jsx';
+import AdminStatsPage from './pages/AdminStatsPage.jsx';
 
 function RequireAuth({ children }) {
   const { user, loading } = useAuth();
@@ -34,6 +37,12 @@ function RequireLogin({ children }) {
 export default function App() {
   const { user } = useAuth();
   const active = hasActiveAccess(user);
+  const location = useLocation();
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname]);
+
   return (
     <div className="app">
       {user && active && <NavBar />}
@@ -43,6 +52,7 @@ export default function App() {
           <Route path="/signup" element={user ? <Navigate to="/map" replace /> : <SignupPage />} />
           <Route path="/login" element={user ? <Navigate to="/map" replace /> : <LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/admin/stats" element={<AdminStatsPage />} />
           <Route
             path="/billing/success"
             element={

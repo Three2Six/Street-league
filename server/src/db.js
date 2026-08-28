@@ -123,11 +123,21 @@ export async function initSchema() {
       PRIMARY KEY (cruise_id, user_id)
     );
 
+    CREATE TABLE IF NOT EXISTS page_views (
+      id SERIAL PRIMARY KEY,
+      visitor_id TEXT NOT NULL,
+      path TEXT NOT NULL,
+      user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    );
+
     CREATE INDEX IF NOT EXISTS idx_reports_expires_at ON reports (expires_at);
     CREATE INDEX IF NOT EXISTS idx_messages_channel_created ON messages (channel, created_at);
     CREATE INDEX IF NOT EXISTS idx_users_points ON users (points DESC);
     CREATE INDEX IF NOT EXISTS idx_sos_status ON sos_alerts (status, expires_at);
     CREATE INDEX IF NOT EXISTS idx_cruises_starts_at ON cruises (starts_at);
+    CREATE INDEX IF NOT EXISTS idx_page_views_created_at ON page_views (created_at);
+    CREATE INDEX IF NOT EXISTS idx_page_views_visitor ON page_views (visitor_id);
   `);
 
   // Additive migrations for tables that may already exist from before roll races were added.
