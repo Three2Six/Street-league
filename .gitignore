@@ -16,3 +16,14 @@ client/android/.idea/
 *.aab
 *.keystore
 *.jks
+
+# iOS (Capacitor) — Xcode project files are tracked; CocoaPods output, user-specific
+# workspace state, and signing material are not (Pods/ regenerates from Podfile.lock via
+# `pod install`, which needs to run on a Mac anyway).
+client/ios/App/Pods/
+client/ios/**/xcuserdata/
+client/ios/**/*.xcuserstate
+client/ios/DerivedData/
+*.mobileprovision
+*.p12
+*.cer
