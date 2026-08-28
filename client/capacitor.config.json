@@ -1,0 +1,12 @@
+{
+  "appId": "com.streetleague.app",
+  "appName": "Street League",
+  "webDir": "dist",
+  "server": {
+    "url": "https://street-league-d6w8.onrender.com",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

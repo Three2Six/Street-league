@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Street League</string>
+    <string name="title_activity_main">Street League</string>
+    <string name="package_name">com.streetleague.app</string>
+    <string name="custom_url_scheme">com.streetleague.app</string>
+</resources>

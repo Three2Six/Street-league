@@ -3,3 +3,16 @@ node_modules/
 dist/
 *.log
 .DS_Store
+
+# Android (Capacitor) — build.gradle/AndroidManifest.xml etc are tracked; local machine
+# artifacts and build output are not.
+client/android/local.properties
+client/android/.gradle/
+client/android/**/build/
+client/android/captures/
+client/android/.cxx/
+client/android/.idea/
+*.apk
+*.aab
+*.keystore
+*.jks
