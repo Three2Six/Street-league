@@ -14,7 +14,7 @@ import messagesRoutes from './routes/messages.js';
 import sosRoutes from './routes/sos.js';
 import cruisesRoutes from './routes/cruises.js';
 import trophiesRoutes from './routes/trophies.js';
-import billingRoutes, { stripeWebhook } from './routes/billing.js';
+import billingRoutes, { stripeWebhook, ensureFounderPromo } from './routes/billing.js';
 import trackRoutes from './routes/track.js';
 import adminRoutes from './routes/admin.js';
 
@@ -71,6 +71,7 @@ const port = process.env.PORT || 4000;
 initSchema()
   .then(() => {
     server.listen(port, () => console.log(`Street League server listening on :${port}`));
+    ensureFounderPromo().catch((err) => console.error('Failed to set up founder promo code', err));
   })
   .catch((err) => {
     console.error('Failed to initialize database schema', err);

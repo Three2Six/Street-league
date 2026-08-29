@@ -503,6 +503,15 @@ button.secondary {
   font-size: 0.85rem;
 }
 
+.founder-promo-banner {
+  background: #3a2f16;
+  border: 1px solid #ffb84d55;
+  color: #ffb84d;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
 .banner-stack {
   position: absolute;
   top: 10px;
