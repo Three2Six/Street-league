@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
-import { VALID_AVATARS } from '../avatars.js';
+import { STANDARD_AVATARS, FOUNDER_AVATARS } from '../avatars.js';
 
 // A small popover on the navbar letting a driver pick which car/vehicle marks them on the map.
 export default function AvatarPicker() {
@@ -33,7 +33,7 @@ export default function AvatarPicker() {
         <>
           <div className="avatar-picker-backdrop" onClick={() => setOpen(false)} />
           <div className="avatar-picker-menu">
-            {VALID_AVATARS.map((a) => (
+            {STANDARD_AVATARS.map((a) => (
               <button
                 key={a}
                 className={`avatar-option ${a === user.avatar ? 'active' : ''}`}
@@ -43,6 +43,21 @@ export default function AvatarPicker() {
                 {a}
               </button>
             ))}
+            {user.founder && (
+              <>
+                <div className="avatar-picker-divider">Founder exclusive</div>
+                {FOUNDER_AVATARS.map((a) => (
+                  <button
+                    key={a}
+                    className={`avatar-option founder ${a === user.avatar ? 'active' : ''}`}
+                    disabled={busy}
+                    onClick={() => pick(a)}
+                  >
+                    {a}
+                  </button>
+                ))}
+              </>
+            )}
           </div>
         </>
       )}

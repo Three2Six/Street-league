@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import PageBackground from '../components/PageBackground.jsx';
 
 export default function SignupPage() {
   const { signup } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const referralCode = searchParams.get('ref');
   const [form, setForm] = useState({ nickname: '', email: '', password: '', city: '', state: '', country: '' });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [error, setError] = useState('');
@@ -18,7 +20,7 @@ export default function SignupPage() {
     setError('');
     setSubmitting(true);
     try {
-      await signup({ ...form, agreedToTerms });
+      await signup({ ...form, agreedToTerms, referralCode });
       navigate('/map');
     } catch (err) {
       setError(err.message);

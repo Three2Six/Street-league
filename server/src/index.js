@@ -4,7 +4,7 @@ import cors from 'cors';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { initSchema } from './db.js';
+import { initSchema, pool } from './db.js';
 import { initWs } from './ws.js';
 import authRoutes from './routes/auth.js';
 import reportsRoutes from './routes/reports.js';
@@ -28,6 +28,13 @@ app.post('/api/billing/webhook', express.raw({ type: 'application/json' }), stri
 app.use(express.json());
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
+
+// Public — powers the landing page's live signup counter. Deliberately just a count, no
+// per-user detail, so it's safe to expose without auth.
+app.get('/api/stats/public', async (req, res) => {
+  const { rows } = await pool.query('SELECT COUNT(*)::int AS count FROM users');
+  res.json({ signups: rows[0].count });
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/billing', billingRoutes);
 app.use('/api/reports', reportsRoutes);

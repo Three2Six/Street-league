@@ -25,6 +25,9 @@ export async function initSchema() {
       paid_at TIMESTAMPTZ,
       stripe_customer_id TEXT,
       agreed_to_terms_at TIMESTAMPTZ,
+      founder BOOLEAN NOT NULL DEFAULT false,
+      referral_code TEXT,
+      referred_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
       created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     );
 
@@ -159,6 +162,10 @@ export async function initSchema() {
     ALTER TABLE users ADD COLUMN IF NOT EXISTS paid_at TIMESTAMPTZ;
     ALTER TABLE users ADD COLUMN IF NOT EXISTS stripe_customer_id TEXT;
     ALTER TABLE users ADD COLUMN IF NOT EXISTS agreed_to_terms_at TIMESTAMPTZ;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS founder BOOLEAN NOT NULL DEFAULT false;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS referral_code TEXT;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS referred_by INTEGER REFERENCES users(id) ON DELETE SET NULL;
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_users_referral_code ON users (referral_code) WHERE referral_code IS NOT NULL;
     CREATE INDEX IF NOT EXISTS idx_challenge_participants_rank ON challenge_participants (user_id, rank);
   `);
   await pool.query(`
