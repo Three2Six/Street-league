@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "map": "Karte",
+    "challenges": "Challenges",
+    "cruises": "Ausfahrten",
+    "leaderboard": "Bestenliste",
+    "chat": "Chat",
+    "contact": "Kontakt",
+    "trialBadge": "{{days}} T. Testphase — Upgraden",
+    "redirecting": "Weiterleitung…",
+    "visibilityOnTitle": "Du bist auf der Karte sichtbar und offen für Rennen — klicke, um dich unsichtbar zu machen",
+    "visibilityOffTitle": "Du bist unsichtbar und für Rennen nicht erreichbar — klicke, um wieder mitzumachen",
+    "inGame": "Im Spiel",
+    "offGrid": "Unsichtbar",
+    "live": "Live",
+    "reconnecting": "Verbindung wird wiederhergestellt…",
+    "logout": "Abmelden"
+  },
+  "avatar": {
+    "chooseMarker": "Wähle deinen Kartenmarker",
+    "founderExclusive": "Exklusiv für Gründer",
+    "ghost": "Geist",
+    "snail": "Schnecke"
+  },
+  "language": {
+    "label": "Sprache"
+  },
+  "landing": {
+    "badge": "BETA · EINE WOCHE GRATIS ZUGANG",
+    "headline1": "Auffahren.",
+    "headline2": "Herausfordern.",
+    "headline3": "Die Bestenliste anführen.",
+    "counter_one": "{{count}} Fahrer bereits in der Beta",
+    "counter_other": "{{count}} Fahrer bereits in der Beta",
+    "features": {
+      "liveMap": { "title": "Live-Karte", "blurb": "Sieh jeden Fahrer in deiner Nähe, in Echtzeit." },
+      "challenges": { "title": "Challenges", "blurb": "Punkt-zu-Punkt oder Rollrennen. Zeitgenommen. Mit Rangliste." },
+      "cruises": { "title": "Ausfahrten", "blurb": "Treffen planen, Standort wird am selben Tag freigegeben." },
+      "chat": { "title": "Chat", "blurb": "Dein Stadt-Chat, plus global. Wisse, wer unterwegs ist." },
+      "sos": { "title": "SOS", "blurb": "Ein Tipp alarmiert jeden Fahrer im Umkreis von 16 km." }
+    },
+    "pointsTitle": "Jedes Rennen zählt",
+    "pointsBody": "Gewinne eine Challenge, gewinne eine Ausfahrt — sammle Punkte und steige in der Bestenliste auf.",
+    "pointsBold": "Stadt → Bundesland → Land → Welt.",
+    "cta": "Der Beta beitreten — Kostenlos",
+    "alreadyHave": "Hast du schon ein Konto?",
+    "login": "Anmelden",
+    "contactUs": "Kontaktiere uns",
+    "disclaimer": "Haftungsausschluss"
+  },
+  "signup": {
+    "title": "Tritt Street League bei",
+    "subtitle": "Wähle einen Spitznamen — so sehen dich alle anderen.",
+    "nicknameLabel": "Spitzname",
+    "emailLabel": "E-Mail",
+    "passwordLabel": "Passwort",
+    "cityLabel": "Stadt",
+    "stateLabel": "Bundesland",
+    "countryLabel": "Land",
+    "agreePrefix": "Ich habe die",
+    "termsLink": "Nutzungsbedingungen und den Haftungsausschluss",
+    "submit": "Registrieren",
+    "submitting": "Konto wird erstellt…",
+    "alreadyHave": "Hast du schon ein Konto?",
+    "login": "Anmelden",
+    "contactUs": "Kontaktiere uns",
+    "disclaimer": "Haftungsausschluss"
+  },
+  "login": {
+    "title": "Willkommen zurück",
+    "emailLabel": "E-Mail",
+    "passwordLabel": "Passwort",
+    "submit": "Anmelden",
+    "submitting": "Anmeldung läuft…",
+    "newHere": "Neu hier?",
+    "createAccount": "Konto erstellen",
+    "contactUs": "Kontaktiere uns",
+    "disclaimer": "Haftungsausschluss"
+  },
+  "paywall": {
+    "title": "Deine kostenlose Testphase ist beendet",
+    "subtitle": "Schalte Street League dauerhaft frei — einmalige Zahlung, keine wiederkehrenden Kosten.",
+    "promoPrefix": "Dank an die Beta-Gründer: nutze den Code",
+    "promoSuffix": "beim Checkout für 50 % Rabatt — läuft ab am {{date}}.",
+    "unlock": "Für 9,99 $ freischalten",
+    "redirecting": "Weiterleitung…",
+    "logout": "Abmelden"
+  },
+  "contact": {
+    "title": "Kontaktiere uns",
+    "subtitle": "Fragen, Feedback oder etwas funktioniert nicht richtig — melde dich.",
+    "emailLabel": "E-Mail:",
+    "backToLogin": "Zurück zur Anmeldung",
+    "disclaimer": "Haftungsausschluss"
+  },
+  "disclaimer": {
+    "title": "Nutzungsbedingungen und Haftungsausschluss",
+    "risk": {
+      "title": "Risikoübernahme",
+      "body": "Street League ist ein soziales und organisatorisches Werkzeug für Autoenthusiasten. Fahren, Rennen fahren und die Teilnahme an Treffen oder Ausfahrten sind grundsätzlich gefährliche Aktivitäten. Mit der Erstellung eines Kontos erkennst du an, dass jede Challenge, jedes Rollrennen, jede Ausfahrt oder andere Aktivität, die du über diese App organisierst oder an der du teilnimmst, vollständig freiwillig und auf eigenes Risiko erfolgt. Du bist allein verantwortlich für deine eigene Sicherheit und die Sicherheit anderer um dich herum."
+    },
+    "legal": {
+      "title": "Keine Förderung illegaler Aktivitäten",
+      "body": "Street League sanktioniert, unterstützt, sponsert oder fördert kein Straßenrennen, keine rücksichtslose Fahrweise und keine Aktivität, die gegen örtliches, regionales oder nationales Recht verstößt. Jede über diese App erstellte \"Challenge\" oder jedes \"Rollrennen\" ist eine selbst zeitgenommene Aktivität zwischen einwilligenden Nutzern — du bist dafür verantwortlich, jederzeit alle Verkehrsgesetze, Geschwindigkeitsbegrenzungen und Vorschriften einzuhalten, ob auf öffentlichen Straßen oder anderswo."
+    },
+    "liability": {
+      "title": "Keine Haftung",
+      "body": "Im größtmöglichen gesetzlich zulässigen Umfang haften Street League, seine Ersteller und Betreiber nicht für Verletzungen, Todesfälle, Sachschäden, Verkehrsstrafen, strafrechtliche Anklagen oder sonstige Verluste oder Schäden, die aus der Nutzung dieser App oder deiner Teilnahme an Aktivitäten entstehen, die über sie organisiert, entdeckt oder koordiniert wurden — einschließlich der Aktivitäten anderer Nutzer."
+    },
+    "location": {
+      "title": "Standort- und GPS-Genauigkeit",
+      "body": "Kartenpositionen, Geschwindigkeitsanzeigen und Zeitmessungen (einschließlich SOS-Warnungen) hängen vom GPS und der Netzwerkverbindung deines Geräts ab, die verzögert, ungenau oder nicht verfügbar sein können. Verlasse dich bei Notfällen nicht auf diese App — kontaktiere im Notfall immer direkt die örtlichen Rettungsdienste."
+    },
+    "conduct": {
+      "title": "Verhalten der Nutzer",
+      "body": "Du musst in deiner Rechtsprechung gesetzlich zum Führen eines Fahrzeugs berechtigt sein, um an fahrbezogenen Funktionen teilzunehmen. Du bist für dein eigenes Verhalten und deine Inhalte (Chatnachrichten, Meldungen, Challenge-Namen usw.) verantwortlich und verpflichtest dich, die App nicht zur Koordination illegaler Aktivitäten oder zur Gefährdung anderer zu nutzen."
+    },
+    "beta": {
+      "title": "Beta-Software",
+      "body": "Diese App befindet sich in der aktiven Beta-Phase. Funktionen können sich ohne Vorankündigung ändern oder ausfallen, und es wird keine Garantie — weder ausdrücklich noch stillschweigend — für ihre Zuverlässigkeit, Verfügbarkeit oder Eignung für einen bestimmten Zweck übernommen."
+    },
+    "contactUs": "Kontaktiere uns",
+    "backToLogin": "Zurück zur Anmeldung"
+  }
+}

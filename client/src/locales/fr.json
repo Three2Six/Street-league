@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "map": "Carte",
+    "challenges": "Défis",
+    "cruises": "Balades",
+    "leaderboard": "Classement",
+    "chat": "Chat",
+    "contact": "Contact",
+    "trialBadge": "{{days}}j d'essai — Passer premium",
+    "redirecting": "Redirection…",
+    "visibilityOnTitle": "Vous êtes visible sur la carte et disponible pour les courses — cliquez pour disparaître",
+    "visibilityOffTitle": "Vous êtes invisible et injoignable pour les courses — cliquez pour revenir dans la partie",
+    "inGame": "Dans la partie",
+    "offGrid": "Invisible",
+    "live": "En direct",
+    "reconnecting": "Reconnexion…",
+    "logout": "Déconnexion"
+  },
+  "avatar": {
+    "chooseMarker": "Choisissez votre marqueur sur la carte",
+    "founderExclusive": "Exclusif fondateur",
+    "ghost": "Fantôme",
+    "snail": "Escargot"
+  },
+  "language": {
+    "label": "Langue"
+  },
+  "landing": {
+    "badge": "BÊTA · ACCÈS GRATUIT PENDANT UNE SEMAINE",
+    "headline1": "Débarque.",
+    "headline2": "Défie.",
+    "headline3": "Domine le classement.",
+    "counter_one": "{{count}} conducteur déjà dans la bêta",
+    "counter_other": "{{count}} conducteurs déjà dans la bêta",
+    "features": {
+      "liveMap": { "title": "Carte en direct", "blurb": "Voyez tous les conducteurs près de vous, en temps réel." },
+      "challenges": { "title": "Défis", "blurb": "Course point à point ou en roulant. Chronométrée. Classée." },
+      "cruises": { "title": "Balades", "blurb": "Organisez la sortie, le lieu est révélé le jour même." },
+      "chat": { "title": "Chat", "blurb": "Votre fil local, plus le chat mondial. Sachez qui roule." },
+      "sos": { "title": "SOS", "blurb": "Un appui alerte tous les conducteurs dans un rayon de 16 km." }
+    },
+    "pointsTitle": "Chaque course compte",
+    "pointsBody": "Gagnez un défi, gagnez une balade — accumulez des points et grimpez le classement.",
+    "pointsBold": "Ville → Région → Pays → Monde.",
+    "cta": "Rejoindre la bêta — Gratuit",
+    "alreadyHave": "Vous avez déjà un compte ?",
+    "login": "Se connecter",
+    "contactUs": "Nous contacter",
+    "disclaimer": "Mentions légales"
+  },
+  "signup": {
+    "title": "Rejoignez Street League",
+    "subtitle": "Choisissez un pseudo — c'est ainsi que les autres vous verront.",
+    "nicknameLabel": "Pseudo",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Mot de passe",
+    "cityLabel": "Ville",
+    "stateLabel": "Région",
+    "countryLabel": "Pays",
+    "agreePrefix": "J'ai lu et j'accepte les",
+    "termsLink": "Conditions et mentions légales de responsabilité",
+    "submit": "S'inscrire",
+    "submitting": "Création du compte…",
+    "alreadyHave": "Vous avez déjà un compte ?",
+    "login": "Se connecter",
+    "contactUs": "Nous contacter",
+    "disclaimer": "Mentions légales"
+  },
+  "login": {
+    "title": "Content de vous revoir",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Mot de passe",
+    "submit": "Se connecter",
+    "submitting": "Connexion…",
+    "newHere": "Nouveau ici ?",
+    "createAccount": "Créer un compte",
+    "contactUs": "Nous contacter",
+    "disclaimer": "Mentions légales"
+  },
+  "paywall": {
+    "title": "Votre essai gratuit est terminé",
+    "subtitle": "Débloquez Street League définitivement — un seul paiement, aucun frais récurrent.",
+    "promoPrefix": "Merci aux fondateurs de la bêta : utilisez le code",
+    "promoSuffix": "au paiement pour 50 % de réduction — expire le {{date}}.",
+    "unlock": "Débloquer pour 9,99 $",
+    "redirecting": "Redirection…",
+    "logout": "Déconnexion"
+  },
+  "contact": {
+    "title": "Nous contacter",
+    "subtitle": "Questions, retours ou un problème technique — écrivez-nous.",
+    "emailLabel": "E-mail :",
+    "backToLogin": "Retour à la connexion",
+    "disclaimer": "Mentions légales"
+  },
+  "disclaimer": {
+    "title": "Conditions et avis de responsabilité",
+    "risk": {
+      "title": "Acceptation des risques",
+      "body": "Street League est un outil social et organisationnel pour les passionnés d'automobile. Conduire, faire la course et participer à des rassemblements ou des balades sont des activités intrinsèquement dangereuses. En créant un compte, vous reconnaissez que tout défi, course en roulant, balade ou autre activité que vous organisez ou rejoignez via cette application est entièrement volontaire et à vos propres risques. Vous êtes seul responsable de votre sécurité et de celle des personnes autour de vous."
+    },
+    "legal": {
+      "title": "Aucun encouragement à une activité illégale",
+      "body": "Street League ne sanctionne, n'approuve, ne parraine ni n'encourage les courses de rue, la conduite imprudente ou toute activité enfreignant la loi locale, régionale ou nationale. Tout \"défi\" ou \"course en roulant\" créé via cette application est une activité chronométrée entre utilisateurs consentants — vous êtes responsable du respect de toutes les lois, limitations de vitesse et réglementations routières à tout moment, sur la voie publique ou ailleurs."
+    },
+    "liability": {
+      "title": "Absence de responsabilité",
+      "body": "Dans toute la mesure permise par la loi, Street League, son ou ses créateurs et ses opérateurs ne peuvent être tenus responsables de blessure, décès, dommage matériel, contravention, poursuite pénale ou toute autre perte ou préjudice résultant de votre utilisation de cette application ou de votre participation à toute activité organisée, découverte ou coordonnée via celle-ci — y compris les actions d'autres utilisateurs."
+    },
+    "location": {
+      "title": "Précision de la localisation et du GPS",
+      "body": "Les positions sur la carte, les relevés de vitesse et le chronométrage (y compris les alertes SOS) dépendent du GPS et de la connexion réseau de votre appareil, qui peuvent être retardés, inexacts ou indisponibles. Ne comptez pas sur cette application pour les services d'urgence — contactez toujours directement les services d'urgence locaux si vous ou quelqu'un d'autre a besoin d'aide."
+    },
+    "conduct": {
+      "title": "Conduite de l'utilisateur",
+      "body": "Vous devez être légalement autorisé à conduire dans votre juridiction pour participer à toute fonctionnalité liée à la conduite. Vous êtes responsable de votre propre conduite et de votre contenu (messages de chat, signalements, noms de défis, etc.) et acceptez de ne pas utiliser l'application pour coordonner des activités illégales ou mettre autrui en danger."
+    },
+    "beta": {
+      "title": "Logiciel en bêta",
+      "body": "Cette application est en bêta active. Les fonctionnalités peuvent changer ou ne plus fonctionner sans préavis, et aucune garantie — expresse ou implicite — n'est offerte quant à sa fiabilité, sa disponibilité ou son adéquation à un usage particulier."
+    },
+    "contactUs": "Nous contacter",
+    "backToLogin": "Retour à la connexion"
+  }
+}

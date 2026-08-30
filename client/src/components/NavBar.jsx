@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWs } from '../context/WsContext.jsx';
 import { trialDaysLeft } from '../access.js';
 import { api } from '../api.js';
 import Logo from './Logo.jsx';
 import AvatarPicker from './AvatarPicker.jsx';
+import LanguageSwitcher from './LanguageSwitcher.jsx';
 
 export default function NavBar() {
+  const { t } = useTranslation();
   const { user, logout, setVisible } = useAuth();
   const { connected } = useWs();
   const [toggling, setToggling] = useState(false);
@@ -39,33 +42,34 @@ export default function NavBar() {
     <nav className="navbar">
       <Logo />
       <div className="navbar-links">
-        <NavLink to="/map" className={({ isActive }) => (isActive ? 'active' : '')}>Map</NavLink>
-        <NavLink to="/challenges" className={({ isActive }) => (isActive ? 'active' : '')}>Challenges</NavLink>
-        <NavLink to="/cruises" className={({ isActive }) => (isActive ? 'active' : '')}>Cruises</NavLink>
-        <NavLink to="/leaderboard" className={({ isActive }) => (isActive ? 'active' : '')}>Leaderboard</NavLink>
-        <NavLink to="/chat" className={({ isActive }) => (isActive ? 'active' : '')}>Chat</NavLink>
-        <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>Contact</NavLink>
+        <NavLink to="/map" className={({ isActive }) => (isActive ? 'active' : '')}>{t('nav.map')}</NavLink>
+        <NavLink to="/challenges" className={({ isActive }) => (isActive ? 'active' : '')}>{t('nav.challenges')}</NavLink>
+        <NavLink to="/cruises" className={({ isActive }) => (isActive ? 'active' : '')}>{t('nav.cruises')}</NavLink>
+        <NavLink to="/leaderboard" className={({ isActive }) => (isActive ? 'active' : '')}>{t('nav.leaderboard')}</NavLink>
+        <NavLink to="/chat" className={({ isActive }) => (isActive ? 'active' : '')}>{t('nav.chat')}</NavLink>
+        <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>{t('nav.contact')}</NavLink>
       </div>
       <div className="navbar-user">
         {!user.paid_at && (
           <button className="trial-badge" onClick={upgrade} disabled={upgrading}>
-            {upgrading ? 'Redirecting…' : `${daysLeft}d trial left — Upgrade`}
+            {upgrading ? t('nav.redirecting') : t('nav.trialBadge', { days: daysLeft })}
           </button>
         )}
         <button
           className={`visibility-toggle ${user.visible ? 'on' : 'off'}`}
           onClick={toggleVisibility}
           disabled={toggling}
-          title={user.visible ? "You're visible on the map and open to races — click to go off the grid" : "You're hidden and unreachable for races — click to rejoin the game"}
+          title={user.visible ? t('nav.visibilityOnTitle') : t('nav.visibilityOffTitle')}
         >
           <span className="visibility-dot" />
-          {user.visible ? 'In the game' : 'Off the grid'}
+          {user.visible ? t('nav.inGame') : t('nav.offGrid')}
         </button>
-        <span className={`status-dot ${connected ? 'online' : 'offline'}`} title={connected ? 'Live' : 'Reconnecting…'} />
+        <span className={`status-dot ${connected ? 'online' : 'offline'}`} title={connected ? t('nav.live') : t('nav.reconnecting')} />
         <AvatarPicker />
+        <LanguageSwitcher className="navbar-language" />
         <span>{user.nickname}</span>
         <span className="points-badge">{user.points} pts</span>
-        <button onClick={logout} className="link-button">Log out</button>
+        <button onClick={logout} className="link-button">{t('nav.logout')}</button>
       </div>
     </nav>
   );

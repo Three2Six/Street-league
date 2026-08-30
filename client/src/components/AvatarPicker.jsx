@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext.jsx';
-import { STANDARD_AVATARS, FOUNDER_AVATARS, AVATAR_LABELS } from '../avatars.js';
+import { STANDARD_AVATARS, FOUNDER_AVATARS } from '../avatars.js';
+
+const FOUNDER_AVATAR_LABEL_KEYS = { '👻': 'avatar.ghost', '🐌': 'avatar.snail' };
 
 // A small popover on the navbar letting a driver pick which car/vehicle marks them on the map.
 export default function AvatarPicker() {
+  const { t } = useTranslation();
   const { user, setAvatar } = useAuth();
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -26,7 +30,7 @@ export default function AvatarPicker() {
 
   return (
     <div className="avatar-picker">
-      <button className="avatar-picker-trigger" onClick={() => setOpen((o) => !o)} title="Choose your map marker">
+      <button className="avatar-picker-trigger" onClick={() => setOpen((o) => !o)} title={t('avatar.chooseMarker')}>
         {user.avatar || '🚗'}
       </button>
       {open && (
@@ -45,14 +49,14 @@ export default function AvatarPicker() {
             ))}
             {user.founder && (
               <>
-                <div className="avatar-picker-divider">Founder exclusive</div>
+                <div className="avatar-picker-divider">{t('avatar.founderExclusive')}</div>
                 {FOUNDER_AVATARS.map((a) => (
                   <button
                     key={a}
                     className={`avatar-option founder ${a === user.avatar ? 'active' : ''}`}
                     disabled={busy}
                     onClick={() => pick(a)}
-                    title={AVATAR_LABELS[a]}
+                    title={t(FOUNDER_AVATAR_LABEL_KEYS[a])}
                   >
                     {a}
                   </button>

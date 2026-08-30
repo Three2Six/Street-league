@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import PageBackground from '../components/PageBackground.jsx';
 
 export default function PaywallPage() {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -32,22 +34,20 @@ export default function PaywallPage() {
     <div className="auth-page">
       <PageBackground image="/backgrounds/auth-nav.png" />
       <div className="auth-form">
-        <h1>Your free trial has ended</h1>
-        <p className="auth-subtitle">
-          Unlock Street League for good — one payment, no recurring charges.
-        </p>
+        <h1>{t('paywall.title')}</h1>
+        <p className="auth-subtitle">{t('paywall.subtitle')}</p>
         {error && <div className="error-banner">{error}</div>}
         {promo && (
           <div className="founder-promo-banner">
-            Beta founder thank-you: use code <strong>{promo.code}</strong> at checkout for 50% off —
-            expires {new Date(promo.expiresAt).toLocaleDateString()}.
+            {t('paywall.promoPrefix')} <strong>{promo.code}</strong>{' '}
+            {t('paywall.promoSuffix', { date: new Date(promo.expiresAt).toLocaleDateString() })}
           </div>
         )}
         <button disabled={submitting} onClick={upgrade}>
-          {submitting ? 'Redirecting…' : 'Unlock for $9.99'}
+          {submitting ? t('paywall.redirecting') : t('paywall.unlock')}
         </button>
         <p className="auth-switch">
-          <button className="link-button" onClick={logout}>Log out</button>
+          <button className="link-button" onClick={logout}>{t('paywall.logout')}</button>
         </p>
       </div>
     </div>

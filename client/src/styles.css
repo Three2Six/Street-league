@@ -95,6 +95,22 @@ body {
   background: #35d07f;
 }
 
+.language-switcher {
+  background: #171a21;
+  border: 1px solid #2f3646;
+  color: #e8eaed;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 0.8rem;
+}
+
+.landing-language {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+}
+
 .status-dot.offline {
   background: #e05252;
 }
@@ -284,6 +300,7 @@ body {
 
 /* Landing page */
 .landing-page {
+  position: relative;
   flex: 1;
   display: flex;
   justify-content: center;

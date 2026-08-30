@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "map": "Mappa",
+    "challenges": "Sfide",
+    "cruises": "Raduni",
+    "leaderboard": "Classifica",
+    "chat": "Chat",
+    "contact": "Contatti",
+    "trialBadge": "{{days}}g di prova — Passa a premium",
+    "redirecting": "Reindirizzamento…",
+    "visibilityOnTitle": "Sei visibile sulla mappa e disponibile per le gare — clicca per uscire dalla rete",
+    "visibilityOffTitle": "Sei nascosto e irraggiungibile per le gare — clicca per tornare in gioco",
+    "inGame": "In gioco",
+    "offGrid": "Fuori rete",
+    "live": "In diretta",
+    "reconnecting": "Riconnessione…",
+    "logout": "Esci"
+  },
+  "avatar": {
+    "chooseMarker": "Scegli il tuo marcatore sulla mappa",
+    "founderExclusive": "Esclusivo fondatore",
+    "ghost": "Fantasma",
+    "snail": "Lumaca"
+  },
+  "language": {
+    "label": "Lingua"
+  },
+  "landing": {
+    "badge": "BETA · ACCESSO GRATUITO PER UNA SETTIMANA",
+    "headline1": "Presentati.",
+    "headline2": "Sfida.",
+    "headline3": "Domina la classifica.",
+    "counter_one": "{{count}} pilota già nella beta",
+    "counter_other": "{{count}} piloti già nella beta",
+    "features": {
+      "liveMap": { "title": "Mappa in diretta", "blurb": "Vedi ogni pilota vicino a te, in tempo reale." },
+      "challenges": { "title": "Sfide", "blurb": "Gara punto a punto o in corsa. Cronometrata. In classifica." },
+      "cruises": { "title": "Raduni", "blurb": "Organizza il raduno, la posizione viene svelata il giorno stesso." },
+      "chat": { "title": "Chat", "blurb": "La tua linea cittadina, più la chat globale. Sai chi c'è in giro." },
+      "sos": { "title": "SOS", "blurb": "Un tocco avvisa tutti i piloti entro 16 km." }
+    },
+    "pointsTitle": "Ogni gara conta",
+    "pointsBody": "Vinci una sfida, vinci un raduno — accumula punti e scala la classifica.",
+    "pointsBold": "Città → Regione → Paese → Mondo.",
+    "cta": "Unisciti alla beta — Gratis",
+    "alreadyHave": "Hai già un account?",
+    "login": "Accedi",
+    "contactUs": "Contattaci",
+    "disclaimer": "Note legali"
+  },
+  "signup": {
+    "title": "Unisciti a Street League",
+    "subtitle": "Scegli un soprannome — è così che ti vedranno gli altri.",
+    "nicknameLabel": "Soprannome",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Password",
+    "cityLabel": "Città",
+    "stateLabel": "Regione",
+    "countryLabel": "Paese",
+    "agreePrefix": "Ho letto e accetto i",
+    "termsLink": "Termini e note legali di responsabilità",
+    "submit": "Registrati",
+    "submitting": "Creazione account…",
+    "alreadyHave": "Hai già un account?",
+    "login": "Accedi",
+    "contactUs": "Contattaci",
+    "disclaimer": "Note legali"
+  },
+  "login": {
+    "title": "Bentornato",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Password",
+    "submit": "Accedi",
+    "submitting": "Accesso in corso…",
+    "newHere": "Sei nuovo qui?",
+    "createAccount": "Crea un account",
+    "contactUs": "Contattaci",
+    "disclaimer": "Note legali"
+  },
+  "paywall": {
+    "title": "La tua prova gratuita è terminata",
+    "subtitle": "Sblocca Street League per sempre — un solo pagamento, nessun addebito ricorrente.",
+    "promoPrefix": "Ringraziamento ai fondatori della beta: usa il codice",
+    "promoSuffix": "al checkout per il 50% di sconto — scade il {{date}}.",
+    "unlock": "Sblocca per $9,99",
+    "redirecting": "Reindirizzamento…",
+    "logout": "Esci"
+  },
+  "contact": {
+    "title": "Contattaci",
+    "subtitle": "Domande, feedback o qualcosa che non funziona — scrivici.",
+    "emailLabel": "E-mail:",
+    "backToLogin": "Torna al login",
+    "disclaimer": "Note legali"
+  },
+  "disclaimer": {
+    "title": "Termini e note legali di responsabilità",
+    "risk": {
+      "title": "Assunzione del rischio",
+      "body": "Street League è uno strumento sociale e organizzativo per gli appassionati di auto. Guidare, gareggiare e partecipare a raduni o ritrovi sono attività intrinsecamente pericolose. Creando un account, riconosci che qualsiasi sfida, gara in corsa, raduno o altra attività che organizzi o a cui partecipi tramite questa app è del tutto volontaria e a tuo rischio. Sei l'unico responsabile della tua sicurezza e di quella delle persone intorno a te."
+    },
+    "legal": {
+      "title": "Nessun incoraggiamento ad attività illegali",
+      "body": "Street League non sanziona, approva, sponsorizza né incoraggia le corse clandestine, la guida spericolata o qualsiasi attività che violi la legge locale, regionale o nazionale. Qualsiasi \"sfida\" o \"gara in corsa\" creata tramite questa app è un'attività autocronometrata tra utenti consenzienti — sei responsabile del rispetto di tutte le leggi sul traffico, dei limiti di velocità e delle normative in ogni momento, su strade pubbliche o altrove."
+    },
+    "liability": {
+      "title": "Nessuna responsabilità",
+      "body": "Nella misura massima consentita dalla legge, Street League, i suoi creatori e operatori non sono responsabili per lesioni, morte, danni materiali, contravvenzioni, procedimenti penali o altre perdite o danni derivanti dall'uso di questa app o dalla partecipazione a qualsiasi attività organizzata, scoperta o coordinata tramite essa — incluse le azioni di altri utenti."
+    },
+    "location": {
+      "title": "Precisione di posizione e GPS",
+      "body": "Le posizioni sulla mappa, le letture di velocità e i tempi (inclusi gli avvisi SOS) dipendono dal GPS e dalla connessione di rete del tuo dispositivo, che possono essere ritardati, imprecisi o non disponibili. Non fare affidamento su questa app per i servizi di emergenza — contatta sempre direttamente i servizi di emergenza locali se tu o qualcun altro avete bisogno di aiuto."
+    },
+    "conduct": {
+      "title": "Condotta dell'utente",
+      "body": "Devi essere legalmente autorizzato a guidare nella tua giurisdizione per partecipare a qualsiasi funzione legata alla guida. Sei responsabile della tua condotta e dei tuoi contenuti (messaggi in chat, segnalazioni, nomi delle sfide, ecc.) e accetti di non usare l'app per coordinare attività illegali o mettere in pericolo altri."
+    },
+    "beta": {
+      "title": "Software in beta",
+      "body": "Questa app è in beta attiva. Le funzionalità possono cambiare o smettere di funzionare senza preavviso, e non viene fornita alcuna garanzia — espressa o implicita — sulla sua affidabilità, disponibilità o idoneità per uno scopo particolare."
+    },
+    "contactUs": "Contattaci",
+    "backToLogin": "Torna al login"
+  }
+}

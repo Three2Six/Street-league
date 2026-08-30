@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "map": "Mapa",
+    "challenges": "Desafios",
+    "cruises": "Encontros",
+    "leaderboard": "Ranking",
+    "chat": "Chat",
+    "contact": "Contacto",
+    "trialBadge": "{{days}}d de teste — Atualizar",
+    "redirecting": "A redirecionar…",
+    "visibilityOnTitle": "Estás visível no mapa e disponível para corridas — clica para ficar invisível",
+    "visibilityOffTitle": "Estás oculto e inacessível para corridas — clica para voltar ao jogo",
+    "inGame": "No jogo",
+    "offGrid": "Invisível",
+    "live": "Ao vivo",
+    "reconnecting": "A reconectar…",
+    "logout": "Terminar sessão"
+  },
+  "avatar": {
+    "chooseMarker": "Escolhe o teu marcador no mapa",
+    "founderExclusive": "Exclusivo de fundador",
+    "ghost": "Fantasma",
+    "snail": "Caracol"
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "landing": {
+    "badge": "BETA · ACESSO GRÁTIS DURANTE UMA SEMANA",
+    "headline1": "Aparece.",
+    "headline2": "Desafia.",
+    "headline3": "Domina o ranking.",
+    "counter_one": "{{count}} condutor já na beta",
+    "counter_other": "{{count}} condutores já na beta",
+    "features": {
+      "liveMap": { "title": "Mapa ao vivo", "blurb": "Vê todos os condutores perto de ti, em tempo real." },
+      "challenges": { "title": "Desafios", "blurb": "Corrida ponto a ponto ou em andamento. Cronometrada. Com ranking." },
+      "cruises": { "title": "Encontros", "blurb": "Organiza o encontro, a localização é revelada no próprio dia." },
+      "chat": { "title": "Chat", "blurb": "A tua linha da cidade, mais o chat global. Sabe quem está por aí." },
+      "sos": { "title": "SOS", "blurb": "Um toque avisa todos os condutores num raio de 16 km." }
+    },
+    "pointsTitle": "Cada corrida conta",
+    "pointsBody": "Ganha um desafio, ganha um encontro — acumula pontos e sobe no ranking.",
+    "pointsBold": "Cidade → Estado → País → Mundo.",
+    "cta": "Junta-te à beta — Grátis",
+    "alreadyHave": "Já tens uma conta?",
+    "login": "Iniciar sessão",
+    "contactUs": "Contacta-nos",
+    "disclaimer": "Aviso legal"
+  },
+  "signup": {
+    "title": "Junta-te à Street League",
+    "subtitle": "Escolhe uma alcunha — é assim que todos te vão ver.",
+    "nicknameLabel": "Alcunha",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Palavra-passe",
+    "cityLabel": "Cidade",
+    "stateLabel": "Estado",
+    "countryLabel": "País",
+    "agreePrefix": "Li e aceito os",
+    "termsLink": "Termos e Aviso Legal de Responsabilidade",
+    "submit": "Registar",
+    "submitting": "A criar conta…",
+    "alreadyHave": "Já tens uma conta?",
+    "login": "Iniciar sessão",
+    "contactUs": "Contacta-nos",
+    "disclaimer": "Aviso legal"
+  },
+  "login": {
+    "title": "Bem-vindo de volta",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Palavra-passe",
+    "submit": "Iniciar sessão",
+    "submitting": "A iniciar sessão…",
+    "newHere": "Novo por aqui?",
+    "createAccount": "Criar uma conta",
+    "contactUs": "Contacta-nos",
+    "disclaimer": "Aviso legal"
+  },
+  "paywall": {
+    "title": "O teu período de teste terminou",
+    "subtitle": "Desbloqueia a Street League para sempre — um único pagamento, sem cobranças recorrentes.",
+    "promoPrefix": "Agradecimento aos fundadores da beta: usa o código",
+    "promoSuffix": "no checkout para 50% de desconto — expira a {{date}}.",
+    "unlock": "Desbloquear por $9,99",
+    "redirecting": "A redirecionar…",
+    "logout": "Terminar sessão"
+  },
+  "contact": {
+    "title": "Contacta-nos",
+    "subtitle": "Perguntas, feedback ou algo que não está a funcionar bem — fala connosco.",
+    "emailLabel": "E-mail:",
+    "backToLogin": "Voltar ao login",
+    "disclaimer": "Aviso legal"
+  },
+  "disclaimer": {
+    "title": "Termos e Aviso Legal de Responsabilidade",
+    "risk": {
+      "title": "Assunção de risco",
+      "body": "A Street League é uma ferramenta social e organizativa para entusiastas de automóveis. Conduzir, competir e participar em encontros ou passeios são atividades inerentemente perigosas. Ao criar uma conta, reconheces que qualquer desafio, corrida em andamento, encontro ou outra atividade que organizes ou a que te juntes através desta app é totalmente voluntária e por tua conta e risco. És o único responsável pela tua segurança e pela segurança das pessoas à tua volta."
+    },
+    "legal": {
+      "title": "Sem incentivo a atividades ilegais",
+      "body": "A Street League não sanciona, aprova, patrocina nem incentiva corridas de rua, condução perigosa ou qualquer atividade que viole a lei local, regional ou nacional. Qualquer \"desafio\" ou \"corrida em andamento\" criado através desta app é uma atividade autocronometrada entre utilizadores que consentem — és responsável por obedecer a todas as leis de trânsito, limites de velocidade e regulamentos em todos os momentos, em vias públicas ou não."
+    },
+    "liability": {
+      "title": "Sem responsabilidade",
+      "body": "Na máxima medida permitida por lei, a Street League, os seus criadores e operadores não são responsáveis por qualquer lesão, morte, dano material, multa de trânsito, acusação criminal ou outra perda ou dano decorrente do uso desta app ou da tua participação em qualquer atividade organizada, descoberta ou coordenada através dela — incluindo atividades de outros utilizadores."
+    },
+    "location": {
+      "title": "Precisão de localização e GPS",
+      "body": "As posições no mapa, as leituras de velocidade e os tempos (incluindo alertas SOS) dependem do GPS e da ligação de rede do teu dispositivo, que podem estar atrasados, imprecisos ou indisponíveis. Não confies nesta app para serviços de emergência — contacta sempre diretamente os serviços de emergência locais se tu ou outra pessoa precisar de ajuda."
+    },
+    "conduct": {
+      "title": "Conduta do utilizador",
+      "body": "Deves estar legalmente autorizado a conduzir na tua jurisdição para participar em qualquer funcionalidade relacionada com condução. És responsável pela tua própria conduta e conteúdo (mensagens de chat, denúncias, nomes de desafios, etc.) e concordas em não usar a app para coordenar atividades ilegais ou colocar outros em perigo."
+    },
+    "beta": {
+      "title": "Software em beta",
+      "body": "Esta app está em beta ativa. As funcionalidades podem mudar ou falhar sem aviso prévio, e não é dada nenhuma garantia — expressa ou implícita — sobre a sua fiabilidade, disponibilidade ou adequação a um propósito específico."
+    },
+    "contactUs": "Contacta-nos",
+    "backToLogin": "Voltar ao login"
+  }
+}
