@@ -49,7 +49,7 @@
     "disclaimer": "Disclaimer"
   },
   "signup": {
-    "title": "Join Street League",
+    "title": "Join Redline League",
     "subtitle": "Pick a nickname — that's how everyone else sees you.",
     "nicknameLabel": "Nickname",
     "emailLabel": "Email",
@@ -79,7 +79,7 @@
   },
   "paywall": {
     "title": "Your free trial has ended",
-    "subtitle": "Unlock Street League for good — one payment, no recurring charges.",
+    "subtitle": "Unlock Redline League for good — one payment, no recurring charges.",
     "promoPrefix": "Beta founder thank-you: use code",
     "promoSuffix": "at checkout for 50% off — expires {{date}}.",
     "unlock": "Unlock for $9.99",
@@ -97,15 +97,15 @@
     "title": "Terms & Liability Disclaimer",
     "risk": {
       "title": "Assumption of risk",
-      "body": "Street League is a social and organizational tool for car enthusiasts. Driving, racing, and attending meet-ups or cruises are inherently dangerous activities. By creating an account, you acknowledge that any challenge, roll race, cruise, or other activity you organize or join through this app is entirely voluntary and at your own risk. You are solely responsible for your own safety and the safety of others around you."
+      "body": "Redline League is a social and organizational tool for car enthusiasts. Driving, racing, and attending meet-ups or cruises are inherently dangerous activities. By creating an account, you acknowledge that any challenge, roll race, cruise, or other activity you organize or join through this app is entirely voluntary and at your own risk. You are solely responsible for your own safety and the safety of others around you."
     },
     "legal": {
       "title": "No encouragement of illegal activity",
-      "body": "Street League does not sanction, endorse, sponsor, or encourage street racing, reckless driving, or any activity that violates local, state, or federal law. Any \"challenge\" or \"roll race\" created through this app is a self-timed activity between consenting users — you are responsible for obeying all traffic laws, speed limits, and regulations at all times, on public roads or otherwise."
+      "body": "Redline League does not sanction, endorse, sponsor, or encourage street racing, reckless driving, or any activity that violates local, state, or federal law. Any \"challenge\" or \"roll race\" created through this app is a self-timed activity between consenting users — you are responsible for obeying all traffic laws, speed limits, and regulations at all times, on public roads or otherwise."
     },
     "liability": {
       "title": "No liability",
-      "body": "To the fullest extent permitted by law, Street League, its creator(s), and operators are not liable for any injury, death, property damage, traffic citation, criminal charge, or other loss or harm arising from your use of this app or your participation in any activity organized, discovered, or coordinated through it — including activity by other users."
+      "body": "To the fullest extent permitted by law, Redline League, its creator(s), and operators are not liable for any injury, death, property damage, traffic citation, criminal charge, or other loss or harm arising from your use of this app or your participation in any activity organized, discovered, or coordinated through it — including activity by other users."
     },
     "location": {
       "title": "Location & GPS accuracy",

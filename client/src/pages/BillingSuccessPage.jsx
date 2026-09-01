@@ -28,7 +28,7 @@ export default function BillingSuccessPage() {
 
   return (
     <div className="centered">
-      <p>Payment received — unlocking Street League…</p>
+      <p>Payment received — unlocking Redline League…</p>
     </div>
   );
 }

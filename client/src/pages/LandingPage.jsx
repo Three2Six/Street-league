@@ -43,7 +43,7 @@ export default function LandingPage() {
       <PageBackground image="/backgrounds/cruises-lineup.png" dim="light" />
       <LanguageSwitcher className="landing-language" />
       <div className="landing-content">
-        <img src="/logo-badge.png" alt="Street League" className="landing-logo" />
+        <img src="/logo-badge.png" alt="Redline League" className="landing-logo" />
 
         <div className="landing-badge">{t('landing.badge')}</div>
 

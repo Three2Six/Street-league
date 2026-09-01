@@ -70,7 +70,7 @@ initWs(server);
 const port = process.env.PORT || 4000;
 initSchema()
   .then(() => {
-    server.listen(port, () => console.log(`Street League server listening on :${port}`));
+    server.listen(port, () => console.log(`Redline League server listening on :${port}`));
     ensureFounderPromo().catch((err) => console.error('Failed to set up founder promo code', err));
   })
   .catch((err) => {

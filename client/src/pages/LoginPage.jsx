@@ -32,7 +32,7 @@ export default function LoginPage() {
     <div className="auth-page">
       <PageBackground image="/backgrounds/auth-nav.png" />
       <form className="auth-form" onSubmit={onSubmit}>
-        <img src="/logo-badge.png" alt="Street League" className="auth-logo" />
+        <img src="/logo-badge.png" alt="Redline League" className="auth-logo" />
         <h1>{t('login.title')}</h1>
         {error && <div className="error-banner">{error}</div>}
         <label>

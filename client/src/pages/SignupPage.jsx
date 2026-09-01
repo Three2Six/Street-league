@@ -35,7 +35,7 @@ export default function SignupPage() {
     <div className="auth-page">
       <PageBackground image="/backgrounds/auth-nav.png" />
       <form className="auth-form" onSubmit={onSubmit}>
-        <img src="/logo-badge.png" alt="Street League" className="auth-logo" />
+        <img src="/logo-badge.png" alt="Redline League" className="auth-logo" />
         <h1>{t('signup.title')}</h1>
         <p className="auth-subtitle">{t('signup.subtitle')}</p>
         {error && <div className="error-banner">{error}</div>}

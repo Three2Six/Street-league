@@ -49,7 +49,7 @@
     "disclaimer": "Note legali"
   },
   "signup": {
-    "title": "Unisciti a Street League",
+    "title": "Unisciti a Redline League",
     "subtitle": "Scegli un soprannome — è così che ti vedranno gli altri.",
     "nicknameLabel": "Soprannome",
     "emailLabel": "E-mail",
@@ -79,7 +79,7 @@
   },
   "paywall": {
     "title": "La tua prova gratuita è terminata",
-    "subtitle": "Sblocca Street League per sempre — un solo pagamento, nessun addebito ricorrente.",
+    "subtitle": "Sblocca Redline League per sempre — un solo pagamento, nessun addebito ricorrente.",
     "promoPrefix": "Ringraziamento ai fondatori della beta: usa il codice",
     "promoSuffix": "al checkout per il 50% di sconto — scade il {{date}}.",
     "unlock": "Sblocca per $9,99",
@@ -97,15 +97,15 @@
     "title": "Termini e note legali di responsabilità",
     "risk": {
       "title": "Assunzione del rischio",
-      "body": "Street League è uno strumento sociale e organizzativo per gli appassionati di auto. Guidare, gareggiare e partecipare a raduni o ritrovi sono attività intrinsecamente pericolose. Creando un account, riconosci che qualsiasi sfida, gara in corsa, raduno o altra attività che organizzi o a cui partecipi tramite questa app è del tutto volontaria e a tuo rischio. Sei l'unico responsabile della tua sicurezza e di quella delle persone intorno a te."
+      "body": "Redline League è uno strumento sociale e organizzativo per gli appassionati di auto. Guidare, gareggiare e partecipare a raduni o ritrovi sono attività intrinsecamente pericolose. Creando un account, riconosci che qualsiasi sfida, gara in corsa, raduno o altra attività che organizzi o a cui partecipi tramite questa app è del tutto volontaria e a tuo rischio. Sei l'unico responsabile della tua sicurezza e di quella delle persone intorno a te."
     },
     "legal": {
       "title": "Nessun incoraggiamento ad attività illegali",
-      "body": "Street League non sanziona, approva, sponsorizza né incoraggia le corse clandestine, la guida spericolata o qualsiasi attività che violi la legge locale, regionale o nazionale. Qualsiasi \"sfida\" o \"gara in corsa\" creata tramite questa app è un'attività autocronometrata tra utenti consenzienti — sei responsabile del rispetto di tutte le leggi sul traffico, dei limiti di velocità e delle normative in ogni momento, su strade pubbliche o altrove."
+      "body": "Redline League non sanziona, approva, sponsorizza né incoraggia le corse clandestine, la guida spericolata o qualsiasi attività che violi la legge locale, regionale o nazionale. Qualsiasi \"sfida\" o \"gara in corsa\" creata tramite questa app è un'attività autocronometrata tra utenti consenzienti — sei responsabile del rispetto di tutte le leggi sul traffico, dei limiti di velocità e delle normative in ogni momento, su strade pubbliche o altrove."
     },
     "liability": {
       "title": "Nessuna responsabilità",
-      "body": "Nella misura massima consentita dalla legge, Street League, i suoi creatori e operatori non sono responsabili per lesioni, morte, danni materiali, contravvenzioni, procedimenti penali o altre perdite o danni derivanti dall'uso di questa app o dalla partecipazione a qualsiasi attività organizzata, scoperta o coordinata tramite essa — incluse le azioni di altri utenti."
+      "body": "Nella misura massima consentita dalla legge, Redline League, i suoi creatori e operatori non sono responsabili per lesioni, morte, danni materiali, contravvenzioni, procedimenti penali o altre perdite o danni derivanti dall'uso di questa app o dalla partecipazione a qualsiasi attività organizzata, scoperta o coordinata tramite essa — incluse le azioni di altri utenti."
     },
     "location": {
       "title": "Precisione di posizione e GPS",

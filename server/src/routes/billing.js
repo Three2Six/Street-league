@@ -53,7 +53,7 @@ router.post('/checkout', requireAuth, async (req, res) => {
         price_data: {
           currency: 'usd',
           unit_amount: PRICE_CENTS,
-          product_data: { name: 'Street League — full access' },
+          product_data: { name: 'Redline League — full access' },
         },
         quantity: 1,
       },

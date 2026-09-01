@@ -49,7 +49,7 @@
     "disclaimer": "Haftungsausschluss"
   },
   "signup": {
-    "title": "Tritt Street League bei",
+    "title": "Tritt Redline League bei",
     "subtitle": "Wähle einen Spitznamen — so sehen dich alle anderen.",
     "nicknameLabel": "Spitzname",
     "emailLabel": "E-Mail",
@@ -79,7 +79,7 @@
   },
   "paywall": {
     "title": "Deine kostenlose Testphase ist beendet",
-    "subtitle": "Schalte Street League dauerhaft frei — einmalige Zahlung, keine wiederkehrenden Kosten.",
+    "subtitle": "Schalte Redline League dauerhaft frei — einmalige Zahlung, keine wiederkehrenden Kosten.",
     "promoPrefix": "Dank an die Beta-Gründer: nutze den Code",
     "promoSuffix": "beim Checkout für 50 % Rabatt — läuft ab am {{date}}.",
     "unlock": "Für 9,99 $ freischalten",
@@ -97,15 +97,15 @@
     "title": "Nutzungsbedingungen und Haftungsausschluss",
     "risk": {
       "title": "Risikoübernahme",
-      "body": "Street League ist ein soziales und organisatorisches Werkzeug für Autoenthusiasten. Fahren, Rennen fahren und die Teilnahme an Treffen oder Ausfahrten sind grundsätzlich gefährliche Aktivitäten. Mit der Erstellung eines Kontos erkennst du an, dass jede Challenge, jedes Rollrennen, jede Ausfahrt oder andere Aktivität, die du über diese App organisierst oder an der du teilnimmst, vollständig freiwillig und auf eigenes Risiko erfolgt. Du bist allein verantwortlich für deine eigene Sicherheit und die Sicherheit anderer um dich herum."
+      "body": "Redline League ist ein soziales und organisatorisches Werkzeug für Autoenthusiasten. Fahren, Rennen fahren und die Teilnahme an Treffen oder Ausfahrten sind grundsätzlich gefährliche Aktivitäten. Mit der Erstellung eines Kontos erkennst du an, dass jede Challenge, jedes Rollrennen, jede Ausfahrt oder andere Aktivität, die du über diese App organisierst oder an der du teilnimmst, vollständig freiwillig und auf eigenes Risiko erfolgt. Du bist allein verantwortlich für deine eigene Sicherheit und die Sicherheit anderer um dich herum."
     },
     "legal": {
       "title": "Keine Förderung illegaler Aktivitäten",
-      "body": "Street League sanktioniert, unterstützt, sponsert oder fördert kein Straßenrennen, keine rücksichtslose Fahrweise und keine Aktivität, die gegen örtliches, regionales oder nationales Recht verstößt. Jede über diese App erstellte \"Challenge\" oder jedes \"Rollrennen\" ist eine selbst zeitgenommene Aktivität zwischen einwilligenden Nutzern — du bist dafür verantwortlich, jederzeit alle Verkehrsgesetze, Geschwindigkeitsbegrenzungen und Vorschriften einzuhalten, ob auf öffentlichen Straßen oder anderswo."
+      "body": "Redline League sanktioniert, unterstützt, sponsert oder fördert kein Straßenrennen, keine rücksichtslose Fahrweise und keine Aktivität, die gegen örtliches, regionales oder nationales Recht verstößt. Jede über diese App erstellte \"Challenge\" oder jedes \"Rollrennen\" ist eine selbst zeitgenommene Aktivität zwischen einwilligenden Nutzern — du bist dafür verantwortlich, jederzeit alle Verkehrsgesetze, Geschwindigkeitsbegrenzungen und Vorschriften einzuhalten, ob auf öffentlichen Straßen oder anderswo."
     },
     "liability": {
       "title": "Keine Haftung",
-      "body": "Im größtmöglichen gesetzlich zulässigen Umfang haften Street League, seine Ersteller und Betreiber nicht für Verletzungen, Todesfälle, Sachschäden, Verkehrsstrafen, strafrechtliche Anklagen oder sonstige Verluste oder Schäden, die aus der Nutzung dieser App oder deiner Teilnahme an Aktivitäten entstehen, die über sie organisiert, entdeckt oder koordiniert wurden — einschließlich der Aktivitäten anderer Nutzer."
+      "body": "Im größtmöglichen gesetzlich zulässigen Umfang haften Redline League, seine Ersteller und Betreiber nicht für Verletzungen, Todesfälle, Sachschäden, Verkehrsstrafen, strafrechtliche Anklagen oder sonstige Verluste oder Schäden, die aus der Nutzung dieser App oder deiner Teilnahme an Aktivitäten entstehen, die über sie organisiert, entdeckt oder koordiniert wurden — einschließlich der Aktivitäten anderer Nutzer."
     },
     "location": {
       "title": "Standort- und GPS-Genauigkeit",

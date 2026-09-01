@@ -310,7 +310,7 @@ export default function MapPage() {
           <div className="modal modal-sos" onClick={(e) => e.stopPropagation()}>
             <h3>🆘 Send an SOS?</h3>
             <p className="muted">
-              This notifies every Street League driver within 10 miles of your current position, right now, that you need help.
+              This notifies every Redline League driver within 10 miles of your current position, right now, that you need help.
             </p>
             <input
               placeholder="What's going on? (optional)"

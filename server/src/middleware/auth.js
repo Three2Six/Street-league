@@ -33,7 +33,7 @@ export function requireActive(req, res, next) {
     const { rows } = await pool.query('SELECT paid_at, trial_ends_at FROM users WHERE id = $1', [req.userId]);
     if (!rows[0]) return res.status(404).json({ error: 'User not found' });
     if (!hasActiveAccess(rows[0])) {
-      return res.status(402).json({ error: 'Your free trial has ended — upgrade to keep using Street League.' });
+      return res.status(402).json({ error: 'Your free trial has ended — upgrade to keep using Redline League.' });
     }
     next();
   });
