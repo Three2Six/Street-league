@@ -1,3 +1,7 @@
+// Mirrors the FREE_FOR_NOW toggle in server/src/access.js — flip both back together to restore
+// the trial/beta/paid gate and the nav bar's upgrade badge.
+export const FREE_FOR_NOW = true;
+
 // The server computes this (server/src/access.js) and sends it as user.active — it depends on
 // BETA_ENDS_AT, a server-only env var, so the client can't safely re-derive it itself.
 export function hasActiveAccess(user) {

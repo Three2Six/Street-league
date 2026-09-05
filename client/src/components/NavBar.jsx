@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWs } from '../context/WsContext.jsx';
-import { trialDaysLeft } from '../access.js';
+import { trialDaysLeft, FREE_FOR_NOW } from '../access.js';
 import { api } from '../api.js';
 import Logo from './Logo.jsx';
 import AvatarPicker from './AvatarPicker.jsx';
@@ -50,7 +50,7 @@ export default function NavBar() {
         <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>{t('nav.contact')}</NavLink>
       </div>
       <div className="navbar-user">
-        {!user.paid_at && (
+        {!FREE_FOR_NOW && !user.paid_at && (
           <button className="trial-badge" onClick={upgrade} disabled={upgrading}>
             {upgrading ? t('nav.redirecting') : t('nav.trialBadge', { days: daysLeft })}
           </button>
